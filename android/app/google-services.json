@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "198916352344",
+    "firebase_url": "https://bonapp-7cc65-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "bonapp-7cc65",
+    "storage_bucket": "bonapp-7cc65.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:198916352344:android:277d582b9098fce8df9d2d",
+        "android_client_info": {
+          "package_name": "com.mrmoix.BonAppsApplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "198916352344-ffq544auov9b332ivn18u85vm0jd8jpa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYrRbYgRERR158_ZP3bif51gTMnnV28eE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "198916352344-ffq544auov9b332ivn18u85vm0jd8jpa.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "198916352344-06rh3am8db9k2ue7d7o5s1ou3s103m23.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.bonapps"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, { useContext, useState } from 'react';
 import {
   View,
   Text,
@@ -10,13 +10,13 @@ import {
   Button,
   TextInput
 } from 'react-native';
-import {windowHeight, windowWidth} from '../utils/Dimensions';
+import { windowHeight, windowWidth } from '../utils/Dimensions';
 import FormInput from '../components/FormInput';
 import FormButton from '../components/FormButton';
 import SocialButton from '../components/SocialButton';
 
 
-const Login = ({navigation}) => {
+const Login = ({ navigation }) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
@@ -46,7 +46,7 @@ const Login = ({navigation}) => {
         onPress={() => navigation.navigate("Home")}
       />
 
-      <TouchableOpacity style={styles.forgotButton} onPress={() => {}}>
+      <TouchableOpacity style={styles.forgotButton} onPress={() => { }}>
         <Text style={styles.navButtonText}>Forgot Password?</Text>
       </TouchableOpacity>
 
@@ -58,27 +58,27 @@ const Login = ({navigation}) => {
         </Text>
       </TouchableOpacity>
 
-      
-        
-          <SocialButton
-            buttonTitle="Sign In with Facebook"
-            btnType="facebook"
-            color="#4867aa"
-            backgroundColor="#e6eaf4"
-            onPress={() => fbLogin()}
-          />
 
-          <SocialButton
-          
-            buttonTitle="Sign In with Google"
-            btnType="google"
-            color="#de4d41"
-            backgroundColor="#f5e7ea"
-            onPress={() => googleLogin()}
-          />
-    
 
-      
+      <SocialButton
+        buttonTitle="Sign In with Facebook"
+        btnType="facebook"
+        color="#4867aa"
+        backgroundColor="#e6eaf4"
+        onPress={() => fbLogin()}
+      />
+
+      <SocialButton
+
+        buttonTitle="Sign In with Google"
+        btnType="google"
+        color="#de4d41"
+        backgroundColor="#f5e7ea"
+        onPress={() => googleLogin()}
+      />
+
+
+
     </View>
   );
 };
@@ -100,7 +100,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   text: {
-    fontFamily: 'Kufam-SemiBoldItalic',
     fontSize: 28,
     marginBottom: 10,
     color: '#051d5f',
