@@ -8,22 +8,14 @@ const Stack = createStackNavigator();
 
 export default function App() {
 
-  const [loading, setLoading] = useState(true)
-  const [user, setUser] = useState(null)
-
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        { user ? (
-          <Stack.Screen name="Home">
-            {props => <HomeScreen {...props} extraData={user} />}
-          </Stack.Screen>
-        ) : (
-          <>
-            <Stack.Screen name="Login" component={LoginScreen} />
-            <Stack.Screen name="Registration" component={RegistrationScreen} />
-          </>
-        )}
+
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Login" component={LoginScreen} options={{ title: '', headerTransparent: true }} />
+        <Stack.Screen name="Registration" component={RegistrationScreen} options={{ title: '', headerTransparent: true }} />
+
       </Stack.Navigator>
     </NavigationContainer>
   );
