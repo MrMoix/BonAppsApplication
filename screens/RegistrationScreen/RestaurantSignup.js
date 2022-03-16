@@ -3,20 +3,19 @@ import { firebase } from "../../firebase/config";
 import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import styles from "./styles";
-import RestaurantSignup from "./RestaurantSignup";
+import RegistrationScreen from "./RegistrationScreen";
 
-export default function RegistrationScreen({ navigation }) {
-  const [fullName, setFullName] = useState("");
+export default function RestaurantSignup({ navigation }) {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [address, setAddress] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [type, setType] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const onFooterLoginPress = () => {
     navigation.navigate("Login");
-  };
-
-  const onFooterRestaurantSignupPress = () => {
-    navigation.navigate("RestaurantSignup");
   };
 
   const onRegisterPress = () => {
@@ -32,9 +31,12 @@ export default function RegistrationScreen({ navigation }) {
         const data = {
           id: uid,
           email,
-          fullName,
+          name,
+          address,
+          phoneNumber,
+          type,
         };
-        const usersRef = firebase.firestore().collection("Clients");
+        const usersRef = firebase.firestore().collection("Restaurant");
         usersRef
           .doc(uid)
           .set(data)
@@ -59,10 +61,10 @@ export default function RegistrationScreen({ navigation }) {
         <Image style={styles.logo} source={require("../../assets/logo.png")} />
         <TextInput
           style={styles.input}
-          placeholder="Full Name"
+          placeholder="Restaurant Name"
           placeholderTextColor="#aaaaaa"
-          onChangeText={(text) => setFullName(text)}
-          value={fullName}
+          onChangeText={(text) => setName(text)}
+          value={name}
           underlineColorAndroid="transparent"
           autoCapitalize="none"
         />
@@ -72,6 +74,33 @@ export default function RegistrationScreen({ navigation }) {
           placeholderTextColor="#aaaaaa"
           onChangeText={(text) => setEmail(text)}
           value={email}
+          underlineColorAndroid="transparent"
+          autoCapitalize="none"
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Address"
+          placeholderTextColor="#aaaaaa"
+          onChangeText={(text) => setAddress(text)}
+          value={address}
+          underlineColorAndroid="transparent"
+          autoCapitalize="none"
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Phone number"
+          placeholderTextColor="#aaaaaa"
+          onChangeText={(text) => setPhoneNumber(text)}
+          value={phoneNumber}
+          underlineColorAndroid="transparent"
+          autoCapitalize="none"
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="Restaurant type"
+          placeholderTextColor="#aaaaaa"
+          onChangeText={(text) => setType(text)}
+          value={type}
           underlineColorAndroid="transparent"
           autoCapitalize="none"
         />
@@ -106,16 +135,6 @@ export default function RegistrationScreen({ navigation }) {
             Already got an account?{" "}
             <Text onPress={onFooterLoginPress} style={styles.footerLink}>
               Log in
-            </Text>
-          </Text>
-          <Text> </Text>
-          <Text style={styles.footerText}>
-            Are you registering a restaurant?{" "}
-            <Text
-              onPress={onFooterRestaurantSignupPress}
-              style={styles.footerLink}
-            >
-              Click here
             </Text>
           </Text>
         </View>
