@@ -1,26 +1,20 @@
-import React from "react";
-import{NavigationContainer} from '@react-navigation/native'
-import{createStackNavigator} from '@react-navigation/stack'
+import 'react-native-gesture-handler';
+import React, { useEffect, useState } from 'react'
+import { NavigationContainer } from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack'
+import { LoginScreen, HomeScreen, RegistrationScreen } from './screens'
 
-import Login from './screens/Login'
-import SignUp from "./screens/SignUp";
-import Home from "./screens/HomePage";
+const Stack = createStackNavigator();
 
-const AppStack = createStackNavigator();
+export default function App() {
 
-const App = () => {
-  return(
-    <NavigationContainer >
-      <AppStack.Navigator screenOptions={{headerShown: false}}>
-
-        <AppStack.Screen name="Login" component={Login}/>
-        <AppStack.Screen name="SignUp" component={SignUp}/>
-        <AppStack.Screen name="Home" component={Home}/>
-      
-
-      </AppStack.Navigator>
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Login" component={LoginScreen} options={{ title: '', headerTransparent: true }} />
+        <Stack.Screen name="Registration" component={RegistrationScreen} options={{ title: '', headerTransparent: true }} />
+        <Stack.Screen name="Home" component={HomeScreen} />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }
-
-export default App;
