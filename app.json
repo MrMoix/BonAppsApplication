@@ -2,6 +2,7 @@
   "expo": {
     "name": "BonAppsApplication",
     "slug": "BonAppsApplication",
+    "scheme": "bonappredirect",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
