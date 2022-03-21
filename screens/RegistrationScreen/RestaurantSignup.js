@@ -36,7 +36,7 @@ export default function RestaurantSignup({ navigation }) {
           phoneNumber,
           type,
         };
-        const usersRef = firebase.firestore().collection("Restaurant");
+        const usersRef = firebase.firestore().collection("Restaurant ");
         usersRef
           .doc(uid)
           .set(data)
