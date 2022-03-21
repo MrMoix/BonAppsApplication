@@ -4,6 +4,7 @@ import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import styles from "./styles";
 import RegistrationScreen from "./RegistrationScreen";
+import HomeRestaurantView from "../HomeScreen/HomeRestaurantView";
 
 export default function RestaurantSignup({ navigation }) {
   const [name, setName] = useState("");
@@ -41,7 +42,7 @@ export default function RestaurantSignup({ navigation }) {
           .doc(uid)
           .set(data)
           .then(() => {
-            navigation.navigate("Home");
+            navigation.navigate("HomeRestaurantView");
           })
           .catch((error) => {
             alert(error);

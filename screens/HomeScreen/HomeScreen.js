@@ -11,8 +11,11 @@ export default function HomeScreen({ navigation }) {
       .then(() => navigation.navigate("Login"));
   };
 
-  const openRestaurant = (restaurant) => {
-    navigation.navigate("RestaurantInfo", { restaurantTitle: restaurant });
+  const openRestaurant = (restaurant, logo) => {
+    navigation.navigate("RestaurantInfo", {
+      restaurantTitle: restaurant,
+      restaurantLogo: logo,
+    });
   };
 
   return (
@@ -23,7 +26,7 @@ export default function HomeScreen({ navigation }) {
       {/* first card */}
       <TouchableOpacity
         style={styles.restaurantCard}
-        onPress={() => openRestaurant('kfc')}
+        onPress={() => openRestaurant("kfc", "../../assets/kfc.png")}
       >
         <Image
           style={styles.logoPicture}
@@ -52,7 +55,12 @@ export default function HomeScreen({ navigation }) {
       </TouchableOpacity>
 
       {/* second card */}
-      <TouchableOpacity style={styles.restaurantCard} onPress={() => openRestaurant('burger king')}>
+      <TouchableOpacity
+        style={styles.restaurantCard}
+        onPress={() =>
+          openRestaurant("burger king", "../../assets/burger_king.png")
+        }
+      >
         <Image
           style={styles.logoPicture}
           source={require("../../assets/burger_king.png")}
@@ -83,8 +91,13 @@ export default function HomeScreen({ navigation }) {
         </View>
       </TouchableOpacity>
 
-      {/* second card */}
-      <TouchableOpacity style={styles.restaurantCard} onPress={() => openRestaurant('Dominos Pizza')}>
+      {/* third card */}
+      <TouchableOpacity
+        style={styles.restaurantCard}
+        onPress={() =>
+          openRestaurant("Dominos Pizza", "../../assets/domino_pizza.png")
+        }
+      >
         <Image
           style={styles.logoPicture}
           source={require("../../assets/domino_pizza.png")}
