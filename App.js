@@ -5,6 +5,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { LoginScreen, HomeScreen, RegistrationScreen } from "./screens";
 import RestaurantSignup from "./screens/RegistrationScreen/RestaurantSignup";
 import RestaurantInfo from "./screens/HomeScreen/RestaurantInfo";
+import HomeRestaurantView from "./screens/HomeScreen/HomeRestaurantView";
 
 const Stack = createStackNavigator();
 
@@ -31,6 +32,11 @@ export default function App() {
         <Stack.Screen
           name="RestaurantInfo"
           component={RestaurantInfo}
+          options={{ title: "", headerTransparent: true }}
+        />
+        <Stack.Screen
+          name="HomeRestaurantView"
+          component={HomeRestaurantView}
           options={{ title: "", headerTransparent: true }}
         />
       </Stack.Navigator>
