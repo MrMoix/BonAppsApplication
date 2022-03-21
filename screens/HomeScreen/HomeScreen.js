@@ -23,7 +23,7 @@ export default function HomeScreen({ navigation }) {
       {/* first card */}
       <TouchableOpacity
         style={styles.restaurantCard}
-        onPress={openRestaurant("kfc")}
+        onPress={() => openRestaurant('kfc')}
       >
         <Image
           style={styles.logoPicture}
@@ -52,7 +52,7 @@ export default function HomeScreen({ navigation }) {
       </TouchableOpacity>
 
       {/* second card */}
-      <TouchableOpacity style={styles.restaurantCard}>
+      <TouchableOpacity style={styles.restaurantCard} onPress={() => openRestaurant('burger king')}>
         <Image
           style={styles.logoPicture}
           source={require("../../assets/burger_king.png")}
@@ -84,7 +84,7 @@ export default function HomeScreen({ navigation }) {
       </TouchableOpacity>
 
       {/* second card */}
-      <View style={styles.restaurantCard}>
+      <TouchableOpacity style={styles.restaurantCard} onPress={() => openRestaurant('Dominos Pizza')}>
         <Image
           style={styles.logoPicture}
           source={require("../../assets/domino_pizza.png")}
@@ -117,7 +117,7 @@ export default function HomeScreen({ navigation }) {
             />
           </View>
         </View>
-      </View>
+      </TouchableOpacity>
 
       {/* <Text>Home Screen</Text>
       <TouchableOpacity style={styles.button} onPress={() => onLogOutPress()}>

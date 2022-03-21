@@ -8,13 +8,17 @@ export default function RestaurantInfo({ route, navigation }) {
 
   const [restaurantDescription, setRestaurantDescription] = useState("");
 
-  const restaurantData = firebase
+  const restaurantDataSnapshot = firebase
     .firestore()
     .collection("Restaurant")
-    .where("name", "=", restaurantTitle)
     .get()
-    .data()
-    .then(setRestaurantDescription(restaurantData.description));
+    .then(querySnapshot => {
+      querySnapshot.forEach(doc => {
+        if(doc.data().name == restaurantTitle){
+          setRestaurantDescription(doc.data().description)
+        }
+      });
+    })
   return (
     <Text
       style={{
