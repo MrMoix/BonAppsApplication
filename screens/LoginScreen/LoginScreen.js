@@ -63,10 +63,32 @@ export default function LoginScreen({ navigation }) {
   }
 
   const onGoogleLoginPress = () => {
-    
     promptAsync()
     .then(
-      signInWithCredential(auth, credential)
+      firebase
+      .auth()
+      .signInWithCredential(auth, credential)
+      .then((response) => {
+        const uid = response.user.uid
+        const usersRef = firebase.firestore().collection('Clients')
+        usersRef
+          .doc(uid)
+          .get()
+          .then(firestoreDocument => {
+            if (!firestoreDocument.exists) {
+              alert("User does not exist anymore.")
+              return;
+            }
+            const user = firestoreDocument.data()
+            navigation.navigate('Home')
+          })
+          .catch(error => {
+            alert(error)
+          });
+      })
+      .catch(error => {
+        alert(error)
+      })
     );
   }
 
