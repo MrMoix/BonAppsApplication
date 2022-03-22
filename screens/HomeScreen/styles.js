@@ -63,7 +63,8 @@ export default StyleSheet.create({
     fontSize: 25,
     marginLeft: 20,
     fontStyle: "italic",
-    marginBottom: 15,
+    marginBottom: 10,
+    marginTop: 15,
   },
   restuarantTitle: {
     fontSize: 20,
