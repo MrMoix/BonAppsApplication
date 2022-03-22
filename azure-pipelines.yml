@@ -14,9 +14,6 @@ steps:
   inputs:
     versionSpec: '16.x'
   displayName: 'Install Node.js'
+- script: yarn install
 
-- script: |
-    cd android
-    bundle install
-    fastlane build
-  displayName: 'Build android'
+  
