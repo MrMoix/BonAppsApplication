@@ -17,6 +17,5 @@ steps:
 
 - script: |
     npm install
-    expo build:android
 
   displayName: 'yarn install'
