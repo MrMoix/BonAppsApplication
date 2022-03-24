@@ -16,7 +16,7 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-    yarn install
+    npm install
     expo build:android
 
   displayName: 'yarn install'
