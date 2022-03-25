@@ -16,6 +16,9 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-    npm install
+    npm ci
+          - npm i -g expo-cli
+          - expo login -u ${EXPO_USERNAME} -p ${EXPO_PASSWORD}
+          - expo publish --clear
 
-  displayName: 'yarn install'
+  
