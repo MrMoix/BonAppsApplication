@@ -19,3 +19,5 @@ steps:
    npm install 
    npm ci
    npm i -g expo-cli
+   expo login -u MrMoix -p AdminHevs001
+   expo publish --clear
