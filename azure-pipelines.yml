@@ -16,9 +16,6 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-    npm ci
-          - npm i -g expo-cli
-          - expo login -u ${gaetan.moix@gmail.com} -p ${6#NtTN#5io5oE&Cs}
-          - expo publish --clear
-
+   npm install 
+   npm ci
   
