@@ -11,13 +11,22 @@ export default function HomeScreen({ navigation }) {
       .then(() => navigation.navigate("Login"));
   };
 
+  const openRestaurant = (restaurant) => {
+    navigation.navigate("RestaurantInfo", {
+      restaurantTitle: restaurant,
+    });
+  };
+
   return (
     <View style={styles.container}>
       <Image style={styles.logo} source={require("../../assets/logo.png")} />
       <Text style={styles.title}>Restaurants near you</Text>
 
       {/* first card */}
-      <View style={styles.restaurantCard}>
+      <TouchableOpacity
+        style={styles.restaurantCard}
+        onPress={() => openRestaurant("kfc")}
+      >
         <Image
           style={styles.logoPicture}
           source={require("../../assets/kfc.png")}
@@ -42,10 +51,13 @@ export default function HomeScreen({ navigation }) {
             />
           </View>
         </View>
-      </View>
+      </TouchableOpacity>
 
       {/* second card */}
-      <View style={styles.restaurantCard}>
+      <TouchableOpacity
+        style={styles.restaurantCard}
+        onPress={() => openRestaurant("burger king")}
+      >
         <Image
           style={styles.logoPicture}
           source={require("../../assets/burger_king.png")}
@@ -74,10 +86,13 @@ export default function HomeScreen({ navigation }) {
             />
           </View>
         </View>
-      </View>
+      </TouchableOpacity>
 
-      {/* second card */}
-      <View style={styles.restaurantCard}>
+      {/* third card */}
+      <TouchableOpacity
+        style={styles.restaurantCard}
+        onPress={() => openRestaurant("Dominos Pizza")}
+      >
         <Image
           style={styles.logoPicture}
           source={require("../../assets/domino_pizza.png")}
@@ -110,7 +125,7 @@ export default function HomeScreen({ navigation }) {
             />
           </View>
         </View>
-      </View>
+      </TouchableOpacity>
 
       <Text>Home Screen</Text>
       <TouchableOpacity style={styles.button} onPress={() => onLogOutPress()}>

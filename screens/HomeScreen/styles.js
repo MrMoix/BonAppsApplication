@@ -61,9 +61,10 @@ export default StyleSheet.create({
   },
   title: {
     fontSize: 25,
-    marginLeft: 0,
+    marginLeft: 20,
     fontStyle: "italic",
-    marginBottom: 15,
+    marginBottom: 10,
+    marginTop: 15,
   },
   restuarantTitle: {
     fontSize: 20,
@@ -82,5 +83,11 @@ export default StyleSheet.create({
   icons: {
     height: 25,
     width: 25,
+  },
+  restaurantText: {
+    marginLeft: 15,
+    marginTop: 30,
+    fontSize: 18,
+    backgroundColor: "#ECEFE2",
   },
 });
