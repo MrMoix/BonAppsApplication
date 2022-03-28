@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { firebase } from "../../firebase/config";
 import { Text, Image, View, TouchableOpacity } from "react-native";
 import styles from "./styles";
@@ -11,10 +11,11 @@ function Menu(props) {
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Text style={styles.restaurantText}>Menu start</Text>
       
-      {props.forEach((dish) => {
-        <Text style={styles.restaurantText}>Dish Name: {dish.dishName}</Text>,
+      {props.dishes.forEach((dish) => <View>
+        <Text style={styles.restaurantText}>Dish Name: {dish.dishName}</Text>
         <Text style={styles.restaurantText}>Dish Price: {dish.price}</Text>
-      })}
+      </View>
+      )}
       <Text style={styles.restaurantText}>Menu end</Text>
     </View>
   );
@@ -28,11 +29,11 @@ function Info(props){
         style={styles.logoPicture}
         source={require("../../assets/images/great_food.png")}
       />
-      <Text style={styles.title}>{props.restaurantName}</Text>
-      <Text style={styles.restaurantText}>About: {props.restaurantDescription}</Text>
-      <Text style={styles.restaurantText}>Address: {props.restaurantAddress}</Text>
-      <Text style={styles.restaurantText}>Email: {props.restaurantEmail}</Text>
-      <Text style={styles.restaurantText}>Phone number: {props.restaurantPhone}</Text>
+      <Text style={styles.title}>{props.restaurantData.name}</Text>
+      <Text style={styles.restaurantText}>About: {props.restaurantData.description}</Text>
+      <Text style={styles.restaurantText}>Address: {props.restaurantData.address}</Text>
+      <Text style={styles.restaurantText}>Email: {props.restaurantData.email}</Text>
+      <Text style={styles.restaurantText}>Phone number: {props.restaurantData.phoneNumber}</Text>
     </View>
   );
 }
@@ -42,44 +43,58 @@ const Tab = createMaterialTopTabNavigator();
 export default function RestaurantInfo({ route, navigation }) {
   const { restaurantTitle } = route.params;
 
-  const [restaurantDescription, setRestaurantDescription] = useState("");
-  const [restaurantAddress, setRestaurantAddress] = useState("");
-  const [restaurantEmail, setRestaurantEmail] = useState("");
-  const [restaurantPhone, setRestaurantPhone] = useState("");
-  const [restaurantName, setRestaurantName] = useState("");
+  const [restaurantData, setRestaurantData] = useState({});
   const [dishes, setDishes] = useState([]);
   
   const dishList = [];
 
-  const restaurantDataSnapshot = firebase
-    .firestore()
-    .collection("Restaurant")
-    .get()
-    .then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        if (doc.data().name == restaurantTitle) {
-          setRestaurantDescription(doc.data().description);
-          setRestaurantAddress(doc.data().address);
-          setRestaurantEmail(doc.data().email);
-          setRestaurantPhone(doc.data().phoneNumber);
-          setRestaurantName(restaurantTitle);
-          dishList = doc.get().collection('Dishes').get().then((dishSnapshot) => {
-            dishSnapshot.forEach((dish) => {
-              dish.data().name;
-            });
-          })
-          setDishes(dishList)
-      }});
-    });
-    console.log("dishName2"+ dishList.length)
-    const restaurantData = {restaurantName, restaurantAddress, restaurantDescription, restaurantEmail, restaurantPhone};
-    console.log('amount of dishes2: ' + dishes.length)
+  useEffect(() => {
+
+    async function fetchMenu(){
+      // route param uid instead of name 
+      const snapshot = await firebase
+      .firestore()
+      .collection("Restaurant")
+      .where("name", "==", restaurantTitle)
+      .get()
+
+      console.log("docs", snapshot.docs);
+
+      const uid = snapshot.docs[0].id;
+      console.log("restaurant uid", uid);
+
+      //
+
+      const restaurantRef = firebase.firestore().collection("Restaurant").doc(uid);
+      const restaurantDoc = await restaurantRef.get();
+      setRestaurantData(restaurantDoc.data());
+
+      const restaurantDishes = await restaurantRef.collection("Dishes").get();
+
+      let dishNames =[];
+
+      restaurantDishes.forEach(async dish => {const dishData = await dish.get(); dishNames.push(dishData.data().name)})
+
+      console.log("restaurant dishes", dishNames);
+  
+    }
+  
+    fetchMenu()
+    // console.log("dishName2 "+ dishList.length)
+    // const restaurantData = {restaurantName, restaurantAddress, restaurantDescription, restaurantEmail, restaurantPhone};
+    // console.log('amount of dishes2: ' + dishes.length)
+  }, [restaurantTitle])
+
   return (
     <NavigationContainer independent={true}>
       <Tab.Navigator>
-        <Tab.Screen name="Menu" component={() => Menu(dishes)} /> 
-        <Tab.Screen name="Info" component={() => Info(restaurantData)} />
-        </Tab.Navigator>
+        <Tab.Screen name="Menu">
+          {() => <Menu dishes={dishes}></Menu>}  
+        </Tab.Screen> 
+        <Tab.Screen name="Info">
+          {() => <Info restaurantData={restaurantData}></Info>}
+        </Tab.Screen>
+      </Tab.Navigator>
     </NavigationContainer>
   );
 }
