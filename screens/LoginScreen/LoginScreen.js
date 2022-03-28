@@ -6,15 +6,15 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import styles from './styles';
 import * as Google from 'expo-auth-session/providers/google';
 import { Button } from 'react-native';
-import { getAuth, GoogleAuthProvider, signInWithCredential, createUserWithCredential } from 'firebase/auth';
+import { GoogleAuthProvider } from 'firebase/auth';
 
 WebBrowser.maybeCompleteAuthSession();
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [auth, setAuth] = useState('')
-  const [credential, setCredential] = useState('')
+  // const [auth, setAuth] = useState('')
+  // const [credential, setCredential] = useState('')
 
   const [request, response, promptAsync] = Google.useIdTokenAuthRequest(
     {
@@ -23,11 +23,62 @@ export default function LoginScreen({ navigation }) {
   );
 
   React.useEffect(() => {
+    const unsubscribe = firebase.auth().onAuthStateChanged(user => {
+      console.log("user", user)
+
+      if(user) {
+        const usersRef = firebase.firestore().collection("Clients");
+        const data = {
+          id: user.uid,
+          email: user.email,
+          fullName: user.displayName,
+        };
+        usersRef
+          .doc(user.uid)
+          .get()
+          .then(firestoreDocument => {
+            if (!firestoreDocument.exists) {
+              usersRef
+                .doc(user.uid)
+                .set(data).then(() =>  navigation.navigate("Home"))
+              return;
+            }else{
+              navigation.navigate("Home");
+            }
+          })
+      }
+    });
+
+    return () => unsubscribe();
+  }, [])
+
+  React.useEffect(() => {
     if (response?.type === 'success') {
       const { id_token } = response.params;
-      setAuth(getAuth());
-      const provider = new GoogleAuthProvider();
-      setCredential(provider.credential(id_token));
+      const provider = new firebase.auth.GoogleAuthProvider();
+
+      const credential = provider.credential(id_token);
+
+      console.log("token", id_token);
+
+      firebase.auth().signInWithCredential(credential);
+
+      // const uid = response.user.uid
+      //   const usersRef = firebase.firestore().collection('Clients')
+      //   usersRef
+      //     .doc(uid)
+      //     .get()
+      //     .then(firestoreDocument => {
+      //       if (!firestoreDocument.exists) {
+      //         alert("User does not exist anymore.")
+      //         return;
+      //       }
+      //       const user = firestoreDocument.data()
+      //       navigation.navigate('Home')
+      //     })
+      //     .catch(error => {
+      //       alert(error)
+      //     });
     }
   }, [response]);
 
@@ -64,34 +115,7 @@ export default function LoginScreen({ navigation }) {
 
   const onGoogleLoginPress = () => {
     promptAsync()
-    .then(
-      firebase
-      .auth()
-      .signInWithCredential(auth, credential)
-      .then((response) => {
-        const uid = response.user.uid
-        const usersRef = firebase.firestore().collection('Clients')
-        usersRef
-          .doc(uid)
-          .get()
-          .then(firestoreDocument => {
-            if (!firestoreDocument.exists) {
-              alert("User does not exist anymore.")
-              return;
-            }
-            const user = firestoreDocument.data()
-            navigation.navigate('Home')
-          })
-          .catch(error => {
-            alert(error)
-          });
-      })
-      .catch(error => {
-        alert(error)
-      })
-    );
   }
-
   
 
   return (
@@ -130,7 +154,7 @@ export default function LoginScreen({ navigation }) {
 
         <TouchableOpacity
           style={styles.button}
-          onPress={() => onGoogleLoginPress(response)}>
+          onPress={() => onGoogleLoginPress()}>
           <Text style={styles.buttonTitle}>Log in with Google</Text>
         </TouchableOpacity>
         
