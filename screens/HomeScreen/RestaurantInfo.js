@@ -6,13 +6,16 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
 function Menu(props) {
+  console.log('TEST' + props)
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      {/* {props.forEach((dish) => {
-        <Text style={styles.restaurantText}>Dish Name: s{dish.name}</Text>,
+      <Text style={styles.restaurantText}>Menu start</Text>
+      
+      {props.forEach((dish) => {
+        <Text style={styles.restaurantText}>Dish Name: {dish.dishName}</Text>,
         <Text style={styles.restaurantText}>Dish Price: {dish.price}</Text>
-      })} */}
-      <Text style={styles.restaurantText}>Menu!</Text>
+      })}
+      <Text style={styles.restaurantText}>Menu end</Text>
     </View>
   );
 }
@@ -44,8 +47,10 @@ export default function RestaurantInfo({ route, navigation }) {
   const [restaurantEmail, setRestaurantEmail] = useState("");
   const [restaurantPhone, setRestaurantPhone] = useState("");
   const [restaurantName, setRestaurantName] = useState("");
-  const [dishes, setDishes] = useState({});
+  const [dishes, setDishes] = useState([]);
   
+  const dishList = [];
+
   const restaurantDataSnapshot = firebase
     .firestore()
     .collection("Restaurant")
@@ -58,12 +63,17 @@ export default function RestaurantInfo({ route, navigation }) {
           setRestaurantEmail(doc.data().email);
           setRestaurantPhone(doc.data().phoneNumber);
           setRestaurantName(restaurantTitle);
-          //setDishes(doc.data().Dishes)
-        }
-      });
+          dishList = doc.get().collection('Dishes').get().then((dishSnapshot) => {
+            dishSnapshot.forEach((dish) => {
+              dish.data().name;
+            });
+          })
+          setDishes(dishList)
+      }});
     });
+    console.log("dishName2"+ dishList.length)
     const restaurantData = {restaurantName, restaurantAddress, restaurantDescription, restaurantEmail, restaurantPhone};
-
+    console.log('amount of dishes2: ' + dishes.length)
   return (
     <NavigationContainer independent={true}>
       <Tab.Navigator>
