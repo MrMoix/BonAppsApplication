@@ -21,3 +21,4 @@ steps:
    npm i -g expo-cli
    expo login -u MrMoix -p AdminHevs001
    expo publish --clear
+   expo build:android -t app-bundle
