@@ -6,8 +6,13 @@ import { LoginScreen, HomeScreen, RegistrationScreen } from "./screens";
 import RestaurantSignup from "./screens/RegistrationScreen/RestaurantSignup";
 import RestaurantInfo from "./screens/HomeScreen/RestaurantInfo";
 import HomeRestaurantView from "./screens/HomeScreen/HomeRestaurantView";
+import LogoCharging from "./screens/RegistrationScreen/LogoCharging";
+import { LogBox } from 'react-native';;
 
 const Stack = createStackNavigator();
+console.ignoredYellowBox = true;
+
+LogBox.ignoreAllLogs();
 
 export default function App() {
   return (
@@ -29,6 +34,7 @@ export default function App() {
           component={RestaurantSignup}
           options={{ title: "", headerTransparent: true }}
         />
+        
         <Stack.Screen
           name="RestaurantInfo"
           component={RestaurantInfo}
@@ -37,6 +43,11 @@ export default function App() {
         <Stack.Screen
           name="HomeRestaurantView"
           component={HomeRestaurantView}
+          options={{ title: "", headerTransparent: true }}
+        />
+        <Stack.Screen
+          name="LogoCharging"
+          component={LogoCharging}
           options={{ title: "", headerTransparent: true }}
         />
       </Stack.Navigator>
