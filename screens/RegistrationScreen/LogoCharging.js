@@ -37,6 +37,14 @@ export default function LogoCharging({ navigation }){
     
 };
 
+const createThreeButtonAlert = () =>
+    Alert.alert('Check your email', 'Your registration succed !', [
+      {
+        text: 'Continue',
+        onPress: () => console.log('Continue pressed'),
+      },
+    ]);
+
 uploadImage = async (uri, imageName) => {
   const response = await fetch(uri);
   const blob = await response.blob(); 
@@ -65,7 +73,7 @@ uploadImage = async (uri, imageName) => {
        
         <TouchableOpacity
           style={styles.button}
-          onPress={()=> navigation.navigate("HomeRestaurantView")}
+          onPress={()=> {createThreeButtonAlert(), navigation.navigate("HomeRestaurantView")}}
         >
           <Text style={styles.buttonTitle}>Next</Text>
         </TouchableOpacity>
