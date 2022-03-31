@@ -90,4 +90,8 @@ export default StyleSheet.create({
     fontSize: 18,
     backgroundColor: "#ECEFE2",
   },
+
+  topTabsNav: {
+    marginTop: 50,
+  },
 });
