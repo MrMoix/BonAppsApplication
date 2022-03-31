@@ -18,7 +18,7 @@ LogBox.ignoreAllLogs();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="BenefitsScreen">
+      <Stack.Navigator>
         <Stack.Screen
           name="Login"
           component={LoginScreen}
@@ -35,7 +35,7 @@ export default function App() {
           component={RestaurantSignup}
           options={{ title: "", headerTransparent: true }}
         />
-        
+
         <Stack.Screen
           name="RestaurantInfo"
           component={RestaurantInfo}
