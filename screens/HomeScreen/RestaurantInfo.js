@@ -11,10 +11,13 @@ function Menu(props) {
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Text style={styles.restaurantText}>Menu start</Text>
       
-      {props.dishes.forEach((dish) => <View>
-        <Text style={styles.restaurantText}>Dish Name: {dish.dishName}</Text>
-        <Text style={styles.restaurantText}>Dish Price: {dish.price}</Text>
-      </View>
+      {props.dishes.map((dish) => 
+        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+          <Text style={styles.restaurantText}>
+            Dish Name: {dish.name}{'\n'}
+            Dish Price: {dish.price}
+          </Text>
+        </View>
       )}
       <Text style={styles.restaurantText}>Menu end</Text>
     </View>
@@ -71,12 +74,14 @@ export default function RestaurantInfo({ route, navigation }) {
 
       const restaurantDishes = await restaurantRef.collection("Dishes").get();
 
-      let dishNames =[];
+      let dishList = [];
 
-      restaurantDishes.forEach(async dish => {const dishData = await dish.get(); dishNames.push(dishData.data().name)})
+      restaurantDishes.forEach(async dish => {dishList.push(dish.data())})
 
-      console.log("restaurant dishes", dishNames);
+      console.log("restaurant dishes", dishList);
   
+      setDishes(dishList);
+
     }
   
     fetchMenu()
