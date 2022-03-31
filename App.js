@@ -7,7 +7,8 @@ import RestaurantSignup from "./screens/RegistrationScreen/RestaurantSignup";
 import RestaurantInfo from "./screens/HomeScreen/RestaurantInfo";
 import HomeRestaurantView from "./screens/HomeScreen/HomeRestaurantView";
 import LogoCharging from "./screens/RegistrationScreen/LogoCharging";
-import { LogBox } from 'react-native';;
+import { LogBox } from 'react-native';import BenefitsScreen from "./screens/HomeScreen/BenefitsScreen";
+;
 
 const Stack = createStackNavigator();
 console.ignoredYellowBox = true;
@@ -17,7 +18,7 @@ LogBox.ignoreAllLogs();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator initialRouteName="BenefitsScreen">
         <Stack.Screen
           name="Login"
           component={LoginScreen}
@@ -48,6 +49,12 @@ export default function App() {
         <Stack.Screen
           name="LogoCharging"
           component={LogoCharging}
+          options={{ title: "", headerTransparent: true }}
+        />
+
+        <Stack.Screen
+          name="BenefitsScreen"
+          component={BenefitsScreen}
           options={{ title: "", headerTransparent: true }}
         />
       </Stack.Navigator>
