@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { firebase } from "../../firebase/config";
-import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Image, Text, TextInput, TouchableOpacity, View, Platform, Alert, ActivityIndicator } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import styles from "./styles";
-import RegistrationScreen from "./RegistrationScreen";
-import HomeRestaurantView from "../HomeScreen/HomeRestaurantView";
 
-export default function RestaurantSignup({ navigation }) {
+
+
+
+export default function RestaurantSignup({ navigation }){
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
@@ -14,11 +15,17 @@ export default function RestaurantSignup({ navigation }) {
   const [type, setType] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [numberPlace, setNumberPlace] = useState("");
+  
+
 
   const onFooterLoginPress = () => {
     navigation.navigate("Login");
   };
 
+  const onFooterNextPress = () => {
+    navigation.navigate("HomeRestaurantView");
+  };
   const onRegisterPress = () => {
     if (password !== confirmPassword) {
       alert("Passwords don't match.");
@@ -26,7 +33,7 @@ export default function RestaurantSignup({ navigation }) {
     }
     firebase
       .auth()
-      .createUserWithEmailAndPassword(email, password)
+      .createUserWithEmailAndPassword(email,password)
       .then((response) => {
         const uid = response.user.uid;
         const data = {
@@ -36,13 +43,14 @@ export default function RestaurantSignup({ navigation }) {
           address,
           phoneNumber,
           type,
+          numberPlace
         };
-        const usersRef = firebase.firestore().collection("Restaurant ");
+        const usersRef = firebase.firestore().collection("Restaurant");
         usersRef
           .doc(uid)
           .set(data)
           .then(() => {
-            navigation.navigate("HomeRestaurantView");
+            navigation.navigate("LogoCharging");
           })
           .catch((error) => {
             alert(error);
@@ -51,7 +59,11 @@ export default function RestaurantSignup({ navigation }) {
       .catch((error) => {
         alert(error);
       });
+
+    
   };
+
+
 
   return (
     <View style={styles.container}>
@@ -98,12 +110,23 @@ export default function RestaurantSignup({ navigation }) {
         />
         <TextInput
           style={styles.input}
+          placeholder="Number of place"
+          placeholderTextColor="#aaaaaa"
+          onChangeText={(text) => setNumberPlace(text)}
+          value={numberPlace}
+          underlineColorAndroid="transparent"
+          autoCapitalize="none"
+        />
+    
+        <TextInput
+          style={styles.input}
           placeholder="Restaurant type"
           placeholderTextColor="#aaaaaa"
           onChangeText={(text) => setType(text)}
           value={type}
           underlineColorAndroid="transparent"
           autoCapitalize="none"
+          require='true'
         />
         <TextInput
           style={styles.input}
@@ -115,6 +138,7 @@ export default function RestaurantSignup({ navigation }) {
           underlineColorAndroid="transparent"
           autoCapitalize="none"
         />
+        
         <TextInput
           style={styles.input}
           placeholderTextColor="#aaaaaa"
@@ -127,18 +151,10 @@ export default function RestaurantSignup({ navigation }) {
         />
         <TouchableOpacity
           style={styles.button}
-          onPress={() => onRegisterPress()}
+          onPress={() =>{onRegisterPress()}}
         >
-          <Text style={styles.buttonTitle}>Create account</Text>
+          <Text style={styles.buttonTitle}>Next</Text>
         </TouchableOpacity>
-        <View style={styles.footerView}>
-          <Text style={styles.footerText}>
-            Already got an account?{" "}
-            <Text onPress={onFooterLoginPress} style={styles.footerLink}>
-              Log in
-            </Text>
-          </Text>
-        </View>
       </KeyboardAwareScrollView>
     </View>
   );

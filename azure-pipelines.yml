@@ -12,8 +12,13 @@ pool:
 steps:
 - task: NodeTool@0
   inputs:
-    versionSpec: '16.x'
+    versionSpec: '15.x'
   displayName: 'Install Node.js'
-- script: yarn install
 
-  
+- script: |
+   npm install 
+   npm ci
+   npm i -g expo-cli
+   expo login -u MrMoix -p AdminHevs001
+   expo publish --clear
+   expo build:android -t app-bundle
