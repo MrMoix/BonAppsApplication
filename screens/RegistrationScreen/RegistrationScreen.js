@@ -3,7 +3,6 @@ import { firebase } from "../../firebase/config";
 import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import styles from "./styles";
-import RestaurantSignup from "./RestaurantSignup";
 
 export default function RegistrationScreen({ navigation }) {
   const [fullName, setFullName] = useState("");
@@ -109,15 +108,6 @@ export default function RegistrationScreen({ navigation }) {
             </Text>
           </Text>
           <Text> </Text>
-          <Text style={styles.footerText}>
-            Are you registering a restaurant?{" "}
-            <Text
-              onPress={onFooterRestaurantSignupPress}
-              style={styles.footerLink}
-            >
-              Click here
-            </Text>
-          </Text>
         </View>
       </KeyboardAwareScrollView>
     </View>
