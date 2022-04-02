@@ -44,7 +44,11 @@ export default function App() {
         <Stack.Screen
           name="HomeRestaurantView"
           component={HomeRestaurantView}
-          options={{ title: "", headerTransparent: true }}
+          options={{
+            title: "",
+            headerTransparent: true,
+            headerLeft: (props) => null,
+          }}
         />
         <Stack.Screen
           name="LogoCharging"

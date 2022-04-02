@@ -100,16 +100,23 @@ export default StyleSheet.create({
     fontSize: 18,
     backgroundColor: "#ECEFE2",
   },
+
+  topTabsNav: {
+    marginTop: 50,
+  },
+
   container2: {
     flex: 1,
     alignItems: 'center',
     backgroundColor: '#4BBE77'
-},
-logo2: {
-  flex: 1,
-  height: 150,
-  width: 250,
-  alignSelf: "center",
-  marginBottom: 10
-},
+  },
+
+  logo2: {
+    flex: 1,
+    height: 150,
+    width: 250,
+    alignSelf: "center",
+    marginBottom: 10
+  },
+  
 });
