@@ -15,26 +15,26 @@ export default StyleSheet.create({
     marginTop: 10,
   },
   button: {
-    backgroundColor: '#4cce4a',
+    backgroundColor: "#4cce4a",
     marginLeft: 30,
     marginRight: 30,
     marginTop: 20,
     height: 48,
     borderRadius: 5,
     alignItems: "center",
-    justifyContent: 'center'
-},
+    justifyContent: "center",
+  },
   TitleText: {
     color: "white",
     fontSize: 32,
-    textAlign: "center"
+    textAlign: "center",
   },
 
   NormalText: {
     color: "white",
     fontSize: 22,
     marginTop: 20,
-    textAlign: "center"
+    textAlign: "center",
   },
   listContainer: {
     marginTop: 20,
@@ -100,23 +100,4 @@ export default StyleSheet.create({
     fontSize: 18,
     backgroundColor: "#ECEFE2",
   },
-<<<<<<< HEAD
-
-  topTabsNav: {
-    marginTop: 50,
-  },
-=======
-  container2: {
-    flex: 1,
-    alignItems: 'center',
-    backgroundColor: '#4BBE77'
-},
-logo2: {
-  flex: 1,
-  height: 150,
-  width: 250,
-  alignSelf: "center",
-  marginBottom: 10
-},
->>>>>>> e4c890a11bf343394274dfb93c2b27c3fd794bdd
 });
