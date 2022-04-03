@@ -2,14 +2,15 @@ import "react-native-gesture-handler";
 import React, { useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createDrawerNavigator } from "@react-navigation/drawer";
 import { LoginScreen, HomeScreen, RegistrationScreen } from "./screens";
 import RestaurantSignup from "./screens/RegistrationScreen/RestaurantSignup";
 import RestaurantInfo from "./screens/HomeScreen/RestaurantInfo";
 import HomeRestaurantView from "./screens/HomeScreen/HomeRestaurantView";
 import LogoCharging from "./screens/RegistrationScreen/LogoCharging";
-import { LogBox } from 'react-native'; import BenefitsScreen from "./screens/HomeScreen/BenefitsScreen";
-
+import { LogBox } from "react-native";
+import BenefitsScreen from "./screens/HomeScreen/BenefitsScreen";
+import AddDish from "./screens/HomeScreen/AddDish";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -25,13 +26,12 @@ const NavigationDrawerStructure = (props) => {
   };
 
   return (
-    <View style={{ flexDirection: 'row' }}>
+    <View style={{ flexDirection: "row" }}>
       <TouchableOpacity onPress={toggleDrawer}>
         {/*Donute Button Image */}
         <Image
           source={{
-            uri:
-              'https://raw.githubusercontent.com/AboutReact/sampleresource/master/drawerWhite.png',
+            uri: "https://raw.githubusercontent.com/AboutReact/sampleresource/master/drawerWhite.png",
           }}
           style={{ width: 25, height: 25, marginLeft: 5 }}
         />
@@ -61,6 +61,11 @@ function HomeStack({ navigation }) {
       <Stack.Screen
         name="LogoCharging"
         component={LogoCharging}
+        options={{ title: "", headerTransparent: true }}
+      />
+      <Stack.Screen
+        name="AddDish"
+        component={AddDish}
         options={{ title: "", headerTransparent: true }}
       />
     </Stack.Navigator>
@@ -105,18 +110,9 @@ export default function App() {
   return (
     <NavigationContainer>
       <Drawer.Navigator initialRouteName="Home">
-        <Drawer.Screen
-          name="Home"
-          component={HomeStack}
-        />
-        <Drawer.Screen
-          name="Login"
-          component={AuthStack}
-        />
-        <Drawer.Screen
-          name="JoinUs"
-          component={JoinUsStack}
-        />
+        <Drawer.Screen name="Home" component={HomeStack} />
+        <Drawer.Screen name="Login" component={AuthStack} />
+        <Drawer.Screen name="JoinUs" component={JoinUsStack} />
       </Drawer.Navigator>
     </NavigationContainer>
   );

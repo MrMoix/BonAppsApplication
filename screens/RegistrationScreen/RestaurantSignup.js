@@ -1,13 +1,19 @@
 import React, { useState } from "react";
 import { firebase } from "../../firebase/config";
-import { Image, Text, TextInput, TouchableOpacity, View, Platform, Alert, ActivityIndicator } from "react-native";
+import {
+  Image,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  Platform,
+  Alert,
+  ActivityIndicator,
+} from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import styles from "./styles";
 
-
-
-
-export default function RestaurantSignup({ navigation }){
+export default function RestaurantSignup({ navigation }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
@@ -16,8 +22,6 @@ export default function RestaurantSignup({ navigation }){
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [numberPlace, setNumberPlace] = useState("");
-  
-
 
   const onFooterLoginPress = () => {
     navigation.navigate("Login");
@@ -33,7 +37,7 @@ export default function RestaurantSignup({ navigation }){
     }
     firebase
       .auth()
-      .createUserWithEmailAndPassword(email,password)
+      .createUserWithEmailAndPassword(email, password)
       .then((response) => {
         const uid = response.user.uid;
         const data = {
@@ -43,7 +47,7 @@ export default function RestaurantSignup({ navigation }){
           address,
           phoneNumber,
           type,
-          numberPlace
+          numberPlace,
         };
         const usersRef = firebase.firestore().collection("Restaurant");
         usersRef
@@ -59,11 +63,7 @@ export default function RestaurantSignup({ navigation }){
       .catch((error) => {
         alert(error);
       });
-
-    
   };
-
-
 
   return (
     <View style={styles.container}>
@@ -117,7 +117,7 @@ export default function RestaurantSignup({ navigation }){
           underlineColorAndroid="transparent"
           autoCapitalize="none"
         />
-    
+
         <TextInput
           style={styles.input}
           placeholder="Restaurant type"
@@ -126,7 +126,7 @@ export default function RestaurantSignup({ navigation }){
           value={type}
           underlineColorAndroid="transparent"
           autoCapitalize="none"
-          require='true'
+          require="true"
         />
         <TextInput
           style={styles.input}
@@ -138,7 +138,7 @@ export default function RestaurantSignup({ navigation }){
           underlineColorAndroid="transparent"
           autoCapitalize="none"
         />
-        
+
         <TextInput
           style={styles.input}
           placeholderTextColor="#aaaaaa"
@@ -151,7 +151,9 @@ export default function RestaurantSignup({ navigation }){
         />
         <TouchableOpacity
           style={styles.button}
-          onPress={() =>{onRegisterPress()}}
+          onPress={() => {
+            onRegisterPress();
+          }}
         >
           <Text style={styles.buttonTitle}>Next</Text>
         </TouchableOpacity>
