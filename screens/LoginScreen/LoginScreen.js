@@ -1,7 +1,14 @@
 import React, { useState } from "react";
 import * as WebBrowser from "expo-web-browser";
 import { firebase } from "../../firebase/config";
-import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
+import {
+  Image,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  Alert,
+} from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import styles from "./styles";
 import * as Google from "expo-auth-session/providers/google";
@@ -107,6 +114,12 @@ export default function LoginScreen({ navigation }) {
             }
             const user = firestoreDocument.data();
             navigation.navigate("Home");
+            Alert.alert("Check your email", "Your registration succeeded!", [
+              {
+                text: "Continue",
+                onPress: () => console.log("Continue pressed"),
+              },
+            ]);
           })
           .catch((error) => {
             alert(error);
@@ -116,6 +129,8 @@ export default function LoginScreen({ navigation }) {
         alert(error);
       });
   };
+
+  //const verifyEmailAlert = () => {
 
   const onGoogleLoginPress = () => {
     promptAsync();
@@ -147,7 +162,12 @@ export default function LoginScreen({ navigation }) {
           underlineColorAndroid="transparent"
           autoCapitalize="none"
         />
-        <TouchableOpacity style={styles.button} onPress={() => onLoginPress()}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => {
+            onLoginPress();
+          }}
+        >
           <Text style={styles.buttonTitle}>Log in</Text>
         </TouchableOpacity>
 
@@ -160,7 +180,8 @@ export default function LoginScreen({ navigation }) {
 
         <TouchableOpacity
           style={styles.googleButton}
-          onPress={() => onGoogleLoginPress()}>
+          onPress={() => onGoogleLoginPress()}
+        >
           <Text style={styles.buttonTitle}>Log in with Google</Text>
         </TouchableOpacity>
 

@@ -95,7 +95,10 @@ function JoinUsStack({ navigation }) {
       <Stack.Screen
         name="BenefitsScreen"
         component={BenefitsScreen}
-        options={{ title: "", headerTransparent: true }}
+        options={{
+          title: "",
+          headerTransparent: true,
+        }}
       />
       <Stack.Screen
         name="RestaurantSignUp"
@@ -109,10 +112,23 @@ function JoinUsStack({ navigation }) {
 export default function App() {
   return (
     <NavigationContainer>
-      <Drawer.Navigator initialRouteName="Home">
+      <Drawer.Navigator
+        initialRouteName="Home"
+        screenOptions={{
+          drawerStyle: {
+            backgroundColor: "#4BBE77",
+          },
+        }}
+      >
         <Drawer.Screen name="Home" component={HomeStack} />
         <Drawer.Screen name="Login" component={AuthStack} />
-        <Drawer.Screen name="JoinUs" component={JoinUsStack} />
+        <Drawer.Screen
+          name="JoinUs"
+          component={JoinUsStack}
+          options={{
+            drawerActiveBackgroundColor: "#4BBE77",
+          }}
+        />
       </Drawer.Navigator>
     </NavigationContainer>
   );

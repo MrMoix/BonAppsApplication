@@ -3,8 +3,8 @@ import { StyleSheet } from "react-native";
 export default StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "flex-start",
-    marginLeft: 20,
+    alignItems: "center",
+    backgroundColor: "#4BBE77",
   },
   logo: {
     //flex: 1,
@@ -78,8 +78,8 @@ export default StyleSheet.create({
     flexWrap: "wrap",
     direction: "ltr",
     backgroundColor: "#E8EFCB",
-    marginBottom: 20,
-    marginRight: 15,
+    margin: 20,
+    //marginRight: 15,
   },
   restaurantContainer: {
     flex: 2,

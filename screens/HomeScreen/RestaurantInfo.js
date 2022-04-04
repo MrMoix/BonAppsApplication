@@ -10,7 +10,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 function Menu(props) {
   console.log("TEST" + props);
   return (
-    <View style={{ flex: 8, justifyContent: "center", alignItems: "center" }}>
+    <View style={styles.container}>
       <KeyboardAwareScrollView
         style={{ flex: 1, width: "100%" }}
         keyboardShouldPersistTaps="always"
@@ -29,7 +29,7 @@ function Menu(props) {
 
 function Info(props) {
   return (
-    <View style={{ marginTop: 120 }}>
+    <View style={styles.container}>
       <Image
         style={styles.logoPicture}
         source={require("../../assets/images/great_food.png")}
@@ -105,7 +105,13 @@ export default function RestaurantInfo({ route, navigation }) {
 
   return (
     <NavigationContainer independent={true}>
-      <Tab.Navigator>
+      <Tab.Navigator
+        screenOptions={{
+          tabBarLabelStyle: { fontSize: 20, color: "white" },
+          //tabBarItemStyle: { width: 100 },
+          tabBarStyle: { backgroundColor: "#4BBE77" },
+        }}
+      >
         <Tab.Screen name="Menu">
           {() => <Menu dishes={dishes}></Menu>}
         </Tab.Screen>

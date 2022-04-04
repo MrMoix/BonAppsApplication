@@ -16,8 +16,8 @@ function MyAccount(props) {
       .then(() => props.navigate("Login"));
   };
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>My account!</Text>
+    <View style={styles.container}>
+      <Text style={{ marginTop: 25 }}>My account!</Text>
       <View style={{ marginTop: 100, marginLeft: 50 }}>
         {/* <Text style={styles.title}>Home Screen</Text> */}
         <TouchableOpacity style={styles.button} onPress={() => onLogOutPress()}>
@@ -40,7 +40,7 @@ function Dishes(props) {
     ]);
   };
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.container}>
       <KeyboardAwareScrollView
         style={{ flex: 1, width: "100%" }}
         keyboardShouldPersistTaps="always"
@@ -156,7 +156,7 @@ export default function HomeRestaurantView({ navigation }) {
     <NavigationContainer independent={true}>
       <Tab.Navigator
         screenOptions={{
-          tabBarLabelStyle: { fontSize: 20 },
+          tabBarLabelStyle: { fontSize: 20, color: "white" },
           //tabBarItemStyle: { width: 100 },
           tabBarStyle: { backgroundColor: "#4BBE77" },
         }}
