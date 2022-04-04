@@ -159,9 +159,8 @@ export default function LoginScreen({ navigation }) {
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={styles.button}
-          onPress={() => onGoogleLoginPress()}
-        >
+          style={styles.googleButton}
+          onPress={() => onGoogleLoginPress()}>
           <Text style={styles.buttonTitle}>Log in with Google</Text>
         </TouchableOpacity>
 
