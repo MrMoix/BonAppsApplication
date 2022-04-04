@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { firebase } from "../../firebase/config";
-import { Text, Image, View, TouchableOpacity } from "react-native";
+import { Text, Image, View, TouchableOpacity, Alert } from "react-native";
 import styles from "./styles";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { NavigationContainer } from "@react-navigation/native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import icons from "../../constants/icons";
+import AddDish from "./AddDish";
 
 function MyAccount(props) {
   const onLogOutPress = () => {
@@ -27,54 +29,74 @@ function MyAccount(props) {
 }
 
 function Dishes(props) {
+  const deleteDish = () => {
+    Alert.alert("Alert ", "Are you sure you want to delete this dish?", [
+      {
+        text: "Cancel",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel",
+      },
+      { text: "YES", onPress: () => console.log("OK Pressed") },
+    ]);
+  };
   return (
     <View style={{ flex: 1 }}>
-      {props.dishes.map((dish) => (
-        <View style={styles.dishBox}>
-          <Text style={styles.restaurantText}>Dish Name: {dish.name}</Text>
-          <Text style={styles.restaurantText}>Dish Price: {dish.price}</Text>
-          <Image style={styles.logoPicture} source={icons.burger} />
-          <View
-            style={{
-              flex: 1,
-              //marginLeft: 15,
-              flexDirection: "row",
-              //marginTop: 20,
-            }}
-          >
-            <Image style={styles.dsihBoxIcons} source={icons.setting} />
-            <Image style={styles.dsihBoxIcons} source={icons.delete_icon} />
-          </View>
-        </View>
-      ))}
-      <View
-        style={{
-          marginBottom: 15,
-          marginTop: 10,
-          alignItems: "center",
-          flexDirection: "row",
-          flex: 1,
-          justifyContent: "center",
-        }}
+      <KeyboardAwareScrollView
+        style={{ flex: 1, width: "100%" }}
+        keyboardShouldPersistTaps="always"
       >
-        <TouchableOpacity onPress={props.navigation.navigate("AddDish")}>
-          <Text style={{ color: "#ff6c44", fontSize: 20, fontWeight: "bold" }}>
-            ADD
-          </Text>
-          <Image style={styles.icons} source={icons.plus} />
-        </TouchableOpacity>
-      </View>
+        {props.dishes.map((dish) => (
+          <View style={styles.dishBox}>
+            <Text style={styles.restaurantText}>Dish Name: {dish.name}</Text>
+
+            <Text style={styles.restaurantText}>Dish Price: {dish.price}</Text>
+            <Image style={styles.logoPicture} source={icons.burger} />
+            <View
+              style={{
+                flex: 1,
+                flexDirection: "row",
+              }}
+            >
+              <Image style={styles.dishBoxIcons} source={icons.setting} />
+              <TouchableOpacity onPress={() => deleteDish()}>
+                <Image style={styles.dishBoxIcons} source={icons.delete_icon} />
+              </TouchableOpacity>
+            </View>
+          </View>
+        ))}
+        <View
+          style={{
+            marginBottom: 15,
+            marginTop: 10,
+            alignItems: "center",
+            flexDirection: "row",
+            flex: 1,
+            justifyContent: "center",
+          }}
+        >
+          <TouchableOpacity
+            onPress={() => props.navigation.navigate("AddDish")}
+          >
+            <Text
+              style={{ color: "#ff6c44", fontSize: 20, fontWeight: "bold" }}
+            >
+              ADD
+            </Text>
+            <Image style={styles.icons} source={icons.plus} />
+          </TouchableOpacity>
+        </View>
+      </KeyboardAwareScrollView>
     </View>
   );
 }
 
 const Tab = createMaterialTopTabNavigator();
+const restaurantTitle = "kfc";
 
 export default function HomeRestaurantView({ navigation }) {
-  const restaurantTitle = "kfc";
-
   const [restaurantData, setRestaurantData] = useState({});
   const [dishes, setDishes] = useState([]);
+  const [dishDocs, setDishDocs] = useState([]);
 
   const dishList = [];
 
@@ -91,8 +113,6 @@ export default function HomeRestaurantView({ navigation }) {
 
       const uid = snapshot.docs[0].id;
       console.log("restaurant uid", uid);
-
-      //
 
       const restaurantRef = firebase
         .firestore()
@@ -111,13 +131,25 @@ export default function HomeRestaurantView({ navigation }) {
 
       console.log("restaurant dishes", dishList);
 
+      console.log(dishList[0].id);
+
+      let docs = [];
+
+      const dishRef = restaurantRef.collection("Dishes");
+
+      const docSnapshot = await dishRef.get();
+      docSnapshot.forEach((doc) => {
+        //console.log(`${doc.id}`);
+        docs.push(doc.id);
+      });
+
+      console.log("docssss", docs);
+
       setDishes(dishList);
+      setDishDocs(docs);
     }
 
     fetchMenu();
-    // console.log("dishName2 "+ dishList.length)
-    // const restaurantData = {restaurantName, restaurantAddress, restaurantDescription, restaurantEmail, restaurantPhone};
-    // console.log('amount of dishes2: ' + dishes.length)
   }, [restaurantTitle]);
 
   return (
@@ -130,7 +162,9 @@ export default function HomeRestaurantView({ navigation }) {
         }}
         //style={styles.top}
       >
-        <Tab.Screen name="My Account" component={() => MyAccount(navigation)} />
+        <Tab.Screen name="My Account">
+          {() => <MyAccount navigation={navigation}></MyAccount>}
+        </Tab.Screen>
         <Tab.Screen name="Dishes">
           {() => <Dishes dishes={dishes} navigation={navigation}></Dishes>}
         </Tab.Screen>

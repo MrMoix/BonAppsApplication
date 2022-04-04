@@ -136,14 +136,13 @@ export default StyleSheet.create({
   },
 
   dishBox: {
-    flex: 1,
-    marginTop: 15,
-    marginBottom: 15,
+    flex: 8,
+    margin: 15,
     //alignItems: "left",
     backgroundColor: "#36844E",
     //justifyContent: "center",
   },
-  dsihBoxIcons: {
+  dishBoxIcons: {
     height: 25,
     width: 25,
     margin: 20,

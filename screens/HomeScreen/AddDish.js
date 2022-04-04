@@ -1,18 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { firebase } from "../../firebase/config";
-import {
-  Image,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-  Platform,
-  Alert,
-  ActivityIndicator,
-} from "react-native";
+import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import styles from "./styles";
 import * as ImagePicker from "expo-image-picker";
+import HomeRestaurantView from "./HomeRestaurantView";
 
 export default function AddDish({ navigation }) {
   const [dishName, setDishName] = useState("");
@@ -20,77 +12,28 @@ export default function AddDish({ navigation }) {
   const [studentPrice, setStudentPrice] = useState("");
   const [logo, setLogo] = useState(null);
 
-  const user = firebase.auth().currentUser;
-  const uid = user.uid;
+  const restaurantTitle = "kfc";
 
-  const addDish = () => {
-    firebase
-      .auth()
-      //.createUserWithEmailAndPassword(email, password)
-      .then((response) => {
-        const uid = response.user.uid;
-        const data = {
-          id: uid,
-          dishName,
-          dishPrice,
-          studentPrice,
-          logo,
-        };
-        const usersRef = firebase
-          .firestore()
-          .collection("Restaurant")
-          .doc(uid)
-          .collection("Dishes");
-        usersRef
-          .doc(uid)
-          .set(data)
-          .then(() => {
-            navigation.navigate("Dishes");
-          })
-          .catch((error) => {
-            alert(error);
-          });
-      })
-      .catch((error) => {
-        alert(error);
+  const addDish = async () => {
+    const snapshot = await firebase
+      .firestore()
+      .collection("Restaurant")
+      .where("name", "==", restaurantTitle)
+      .get();
+
+    const uid = snapshot.docs[0].id;
+    const restaurantRef = firebase
+      .firestore()
+      .collection("Restaurant")
+      .doc(uid);
+
+    const res = await restaurantRef
+      .collection("Dishes")
+      .add({ name: dishName, price: dishPrice })
+      .then(() => {
+        navigation.navigate("HomeRestaurantView");
       });
-
-    const pickImage = async () => {
-      // No permissions request is necessary for launching the image library
-      let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true,
-        aspect: [4, 3],
-        quality: 1,
-      });
-      if (!result.cancelled) {
-        setLogo(result.uri);
-        uploadImage(result.uri, "logo")
-          .then(() => {
-            console.log("it work");
-            console.log(user.uid);
-          })
-          .catch((error) => {
-            console.log("it does not work");
-            console.error(error);
-            console.log(user.uid);
-          });
-      }
-      console.log(result);
-    };
-
-    uploadImage = async (uri, imageName) => {
-      const response = await fetch(uri);
-      const blob = await response.blob();
-
-      const ref = firebase
-        .storage()
-        .ref()
-        .child(user.uid + "/" + imageName);
-      return ref.put(blob);
-    };
   };
-
   return (
     <View style={styles.container}>
       <KeyboardAwareScrollView

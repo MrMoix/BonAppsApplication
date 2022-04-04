@@ -5,18 +5,24 @@ import styles from "./styles";
 import { NavigationContainer } from "@react-navigation/native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import icons from "../../constants/icons";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 function Menu(props) {
   console.log("TEST" + props);
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      {props.dishes.map((dish) => (
-        <View style={styles.dishBox}>
-          <Text style={styles.restaurantText}>Dish Name: {dish.name}</Text>
-          <Text style={styles.restaurantText}>Dish Price: {dish.price}</Text>
-          <Image style={styles.logoPicture} source={icons.burger} />
-        </View>
-      ))}
+    <View style={{ flex: 8, justifyContent: "center", alignItems: "center" }}>
+      <KeyboardAwareScrollView
+        style={{ flex: 1, width: "100%" }}
+        keyboardShouldPersistTaps="always"
+      >
+        {props.dishes.map((dish) => (
+          <View style={styles.dishBox}>
+            <Text style={styles.restaurantText}>Dish Name: {dish.name}</Text>
+            <Text style={styles.restaurantText}>Dish Price: {dish.price}</Text>
+            <Image style={styles.logoPicture} source={icons.burger} />
+          </View>
+        ))}
+      </KeyboardAwareScrollView>
     </View>
   );
 }
