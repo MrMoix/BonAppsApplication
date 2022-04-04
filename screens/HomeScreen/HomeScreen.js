@@ -129,7 +129,7 @@ export default function HomeScreen({ navigation }) {
 
       <Text>Home Screen</Text>
       <TouchableOpacity style={styles.button} onPress={() => onLogOutPress()}>
-        <Text style={styles.buttonTitle}>Log Out</Text>
+        <Text style={styles.buttonTitle}> Log Out </Text>
       </TouchableOpacity>
     </View>
   );

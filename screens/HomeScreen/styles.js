@@ -24,6 +24,23 @@ export default StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  input: {
+    height: 48,
+    borderRadius: 5,
+    overflow: "hidden",
+    backgroundColor: "white",
+    marginTop: 10,
+    marginBottom: 10,
+    marginLeft: 30,
+    marginRight: 30,
+    paddingLeft: 16,
+  },
+
+  buttonTitle: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
   TitleText: {
     color: "white",
     fontSize: 32,
@@ -60,8 +77,9 @@ export default StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     direction: "ltr",
-    backgroundColor: "#ECEFE2",
+    backgroundColor: "#E8EFCB",
     marginBottom: 20,
+    marginRight: 15,
   },
   restaurantContainer: {
     flex: 2,
@@ -93,12 +111,15 @@ export default StyleSheet.create({
   icons: {
     height: 25,
     width: 25,
+    //margin: 20,
   },
   restaurantText: {
     marginLeft: 15,
     marginTop: 30,
     fontSize: 18,
-    backgroundColor: "#ECEFE2",
+    marginRight: 15,
+    backgroundColor: "#E8EFCB",
+    color: "#1B1E1C",
   },
   container2: {
     flex: 1,
@@ -112,5 +133,18 @@ export default StyleSheet.create({
     width: 250,
     alignSelf: "center",
     marginBottom: 10,
+  },
+
+  dishBox: {
+    flex: 8,
+    margin: 15,
+    //alignItems: "left",
+    backgroundColor: "#36844E",
+    //justifyContent: "center",
+  },
+  dishBoxIcons: {
+    height: 25,
+    width: 25,
+    margin: 20,
   },
 });

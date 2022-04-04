@@ -4,28 +4,30 @@ import { Text, Image, View, TouchableOpacity } from "react-native";
 import styles from "./styles";
 import { NavigationContainer } from "@react-navigation/native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import icons from "../../constants/icons";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 function Menu(props) {
-  console.log('TEST' + props)
+  console.log("TEST" + props);
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text style={styles.restaurantText}>Menu start</Text>
-      
-      {props.dishes.map((dish) => 
-        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-          <Text style={styles.restaurantText}>
-            Dish Name: {dish.name}{'\n'}
-            Dish Price: {dish.price}
-          </Text>
-        </View>
-      )}
-      <Text style={styles.restaurantText}>Menu end</Text>
+    <View style={{ flex: 8, justifyContent: "center", alignItems: "center" }}>
+      <KeyboardAwareScrollView
+        style={{ flex: 1, width: "100%" }}
+        keyboardShouldPersistTaps="always"
+      >
+        {props.dishes.map((dish) => (
+          <View style={styles.dishBox}>
+            <Text style={styles.restaurantText}>Dish Name: {dish.name}</Text>
+            <Text style={styles.restaurantText}>Dish Price: {dish.price}</Text>
+            <Image style={styles.logoPicture} source={icons.burger} />
+          </View>
+        ))}
+      </KeyboardAwareScrollView>
     </View>
   );
 }
 
-
-function Info(props){
+function Info(props) {
   return (
     <View style={{ marginTop: 120 }}>
       <Image
@@ -33,10 +35,18 @@ function Info(props){
         source={require("../../assets/images/great_food.png")}
       />
       <Text style={styles.title}>{props.restaurantData.name}</Text>
-      <Text style={styles.restaurantText}>About: {props.restaurantData.description}</Text>
-      <Text style={styles.restaurantText}>Address: {props.restaurantData.address}</Text>
-      <Text style={styles.restaurantText}>Email: {props.restaurantData.email}</Text>
-      <Text style={styles.restaurantText}>Phone number: {props.restaurantData.phoneNumber}</Text>
+      <Text style={styles.restaurantText}>
+        About: {props.restaurantData.description}
+      </Text>
+      <Text style={styles.restaurantText}>
+        Address: {props.restaurantData.address}
+      </Text>
+      <Text style={styles.restaurantText}>
+        Email: {props.restaurantData.email}
+      </Text>
+      <Text style={styles.restaurantText}>
+        Phone number: {props.restaurantData.phoneNumber}
+      </Text>
     </View>
   );
 }
@@ -48,18 +58,17 @@ export default function RestaurantInfo({ route, navigation }) {
 
   const [restaurantData, setRestaurantData] = useState({});
   const [dishes, setDishes] = useState([]);
-  
+
   const dishList = [];
 
   useEffect(() => {
-
-    async function fetchMenu(){
-      // route param uid instead of name 
+    async function fetchMenu() {
+      // route param uid instead of name
       const snapshot = await firebase
-      .firestore()
-      .collection("Restaurant")
-      .where("name", "==", restaurantTitle)
-      .get()
+        .firestore()
+        .collection("Restaurant")
+        .where("name", "==", restaurantTitle)
+        .get();
 
       console.log("docs", snapshot.docs);
 
@@ -68,7 +77,10 @@ export default function RestaurantInfo({ route, navigation }) {
 
       //
 
-      const restaurantRef = firebase.firestore().collection("Restaurant").doc(uid);
+      const restaurantRef = firebase
+        .firestore()
+        .collection("Restaurant")
+        .doc(uid);
       const restaurantDoc = await restaurantRef.get();
       setRestaurantData(restaurantDoc.data());
 
@@ -76,26 +88,27 @@ export default function RestaurantInfo({ route, navigation }) {
 
       let dishList = [];
 
-      restaurantDishes.forEach(async dish => {dishList.push(dish.data())})
+      restaurantDishes.forEach(async (dish) => {
+        dishList.push(dish.data());
+      });
 
       console.log("restaurant dishes", dishList);
-  
-      setDishes(dishList);
 
+      setDishes(dishList);
     }
-  
-    fetchMenu()
+
+    fetchMenu();
     // console.log("dishName2 "+ dishList.length)
     // const restaurantData = {restaurantName, restaurantAddress, restaurantDescription, restaurantEmail, restaurantPhone};
     // console.log('amount of dishes2: ' + dishes.length)
-  }, [restaurantTitle])
+  }, [restaurantTitle]);
 
   return (
     <NavigationContainer independent={true}>
       <Tab.Navigator>
         <Tab.Screen name="Menu">
-          {() => <Menu dishes={dishes}></Menu>}  
-        </Tab.Screen> 
+          {() => <Menu dishes={dishes}></Menu>}
+        </Tab.Screen>
         <Tab.Screen name="Info">
           {() => <Info restaurantData={restaurantData}></Info>}
         </Tab.Screen>
