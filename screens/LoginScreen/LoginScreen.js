@@ -16,6 +16,7 @@ export default function LoginScreen({ navigation }) {
   // const [auth, setAuth] = useState('')
   // const [credential, setCredential] = useState('')
 
+
   const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
     clientId:
       "198916352344-ffq544auov9b332ivn18u85vm0jd8jpa.apps.googleusercontent.com",
@@ -87,7 +88,31 @@ export default function LoginScreen({ navigation }) {
   };
 
   const onRestaurantPress = () => {
-    navigation.navigate("HomeRestaurantView");
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then((response) => {
+        const uid = response.user.uid;
+        const usersRef = firebase.firestore().collection("Restaurant");
+        usersRef
+          .doc(uid)
+          .get()
+          .then((firestoreDocument) => {
+            if (!firestoreDocument.exists) {
+              alert("User does not exist anymore.");
+              return;
+            }
+            const user = firestoreDocument.data();
+            navigation.navigate("HomeRestaurantView");
+          })
+          .catch((error) => {
+            alert(error);
+          });
+      })
+      .catch((error) => {
+        alert(error);
+      });
+
   };
 
   const onLoginPress = () => {
@@ -120,6 +145,8 @@ export default function LoginScreen({ navigation }) {
   const onGoogleLoginPress = () => {
     promptAsync();
   };
+
+
 
   return (
     <View style={styles.container}>
@@ -155,7 +182,7 @@ export default function LoginScreen({ navigation }) {
           style={styles.button}
           onPress={() => onRestaurantPress()}
         >
-          <Text style={styles.buttonTitle}>RESTAURANT login</Text>
+          <Text style={styles.buttonTitle}>Restaurant login</Text>
         </TouchableOpacity>
 
         <TouchableOpacity

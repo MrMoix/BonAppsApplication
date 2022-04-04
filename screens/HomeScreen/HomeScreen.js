@@ -8,7 +8,7 @@ export default function HomeScreen({ navigation }) {
     firebase
       .auth()
       .signOut()
-      .then(() => navigation.push("Login"));
+      .then(() => navigation.push("LoginScreen"));
   };
 
   const openRestaurant = (restaurant) => {

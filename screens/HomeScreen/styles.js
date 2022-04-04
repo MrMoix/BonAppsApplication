@@ -4,7 +4,9 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "flex-start",
-    marginLeft: 20,
+    backgroundColor: "#4BBE77"
+    
+   
   },
   logo: {
     //flex: 1,
@@ -34,6 +36,18 @@ export default StyleSheet.create({
     marginLeft: 30,
     marginRight: 30,
     paddingLeft: 16,
+  },
+
+  buttonAdd: {
+    backgroundColor: "#4cce4a",
+    marginLeft: 30,
+    marginRight: 30,
+    marginTop: 10,
+    height: 48,
+    flex: 1,
+    borderRadius: 5,
+    alignItems: "center",
+    justifyContent: "center",
   },
 
   buttonTitle: {
@@ -71,7 +85,8 @@ export default StyleSheet.create({
     height: 80,
     width: 80,
     marginTop: 10,
-    marginLeft: 0,
+    alignItems: "center",
+    justifyContent: "center"
   },
   restaurantCard: {
     flexDirection: "row",
@@ -80,6 +95,8 @@ export default StyleSheet.create({
     backgroundColor: "#E8EFCB",
     marginBottom: 20,
     marginRight: 15,
+    marginLeft:15,
+    borderRadius: 5,
   },
   restaurantContainer: {
     flex: 2,
@@ -90,7 +107,6 @@ export default StyleSheet.create({
   title: {
     fontSize: 25,
     marginLeft: 20,
-    fontStyle: "italic",
     marginBottom: 10,
     marginTop: 15,
   },
@@ -120,6 +136,7 @@ export default StyleSheet.create({
     marginRight: 15,
     backgroundColor: "#E8EFCB",
     color: "#1B1E1C",
+    borderRadius: 5,
   },
   container2: {
     flex: 1,
@@ -141,6 +158,8 @@ export default StyleSheet.create({
     //alignItems: "left",
     backgroundColor: "#36844E",
     //justifyContent: "center",
+    borderRadius: 8,
+    justifyContent: "center"
   },
   dishBoxIcons: {
     height: 25,
