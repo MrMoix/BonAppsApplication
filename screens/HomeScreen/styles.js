@@ -12,7 +12,7 @@ export default StyleSheet.create({
     width: 400,
     alignSelf: "center",
     marginBottom: 10,
-    marginTop: 10,
+    //marginTop: 10,
   },
   button: {
     backgroundColor: "#4cce4a",
