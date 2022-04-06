@@ -13,12 +13,13 @@ export default function AddDish({ navigation }) {
   const [logo, setLogo] = useState(null);
 
   const restaurantTitle = "kfc";
-
   const addDish = async () => {
+    const currentUser = firebase.auth().currentUser
+    const restaurantTitle = currentUser.uid;
     const snapshot = await firebase
       .firestore()
       .collection("Restaurant")
-      .where("name", "==", restaurantTitle)
+      .where("id", "==", restaurantTitle)
       .get();
 
     const uid = snapshot.docs[0].id;

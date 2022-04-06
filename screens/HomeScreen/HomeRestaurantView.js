@@ -1,24 +1,36 @@
 import React, { useState, useEffect } from "react";
 import { firebase } from "../../firebase/config";
-import { Text, Image, View, TouchableOpacity, Alert } from "react-native";
+import { Text, Image, View, TouchableOpacity, Alert, RefreshControl, } from "react-native";
 import styles from "./styles";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { NavigationContainer } from "@react-navigation/native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import icons from "../../constants/icons";
 import AddDish from "./AddDish";
+import { backgroundColor } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
+import RestaurantInfo from "./RestaurantInfo";
+import { Button } from "react-native-web";
 
-function MyAccount(props) {
+function MyAccount({ navigation }, props) {
+  const restaurantTitle = "kfc";
   const onLogOutPress = () => {
+    
     firebase
       .auth()
       .signOut()
-      .then(() => props.navigate("Login"));
+      .then(() => navigation.navigate("LoginScreen"));
+
   };
   return (
+<<<<<<< HEAD
     <View style={styles.container}>
       <Text style={{ marginTop: 25 }}>My account!</Text>
       <View style={{ marginTop: 100, marginLeft: 50 }}>
+=======
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: '#4BBE77' }}>
+      <Text>Connected</Text>
+      <View>
+>>>>>>> c68a6fd849ad1be2ff64f2bdd80ce5c047f6a7d1
         {/* <Text style={styles.title}>Home Screen</Text> */}
         <TouchableOpacity style={styles.button} onPress={() => onLogOutPress()}>
           <Text style={styles.buttonTitle}>Log Out</Text>
@@ -27,8 +39,9 @@ function MyAccount(props) {
     </View>
   );
 }
-
+const restaurantTitle = "kfc";
 function Dishes(props) {
+  const restaurantTitle = "kfc";
   const deleteDish = () => {
     Alert.alert("Alert ", "Are you sure you want to delete this dish?", [
       {
@@ -39,18 +52,38 @@ function Dishes(props) {
       { text: "YES", onPress: () => console.log("OK Pressed") },
     ]);
   };
+
+  function wait (timeout){
+    return new Promise(resolve => {
+      setTimeout(resolve,timeout)
+    });
+  }
+  const[refresh, setRefresh] = useState(false);
+
+  const pullMe = React.useCallback(()=>{
+    setRefresh(true);
+
+    wait(2000).then(()=> {
+      setRefresh(false)
+      
+    })
+    
+  }, [refresh])
+    
+
   return (
     <View style={styles.container}>
       <KeyboardAwareScrollView
-        style={{ flex: 1, width: "100%" }}
+        style={{ flex: 1, width: "100%", backgroundColor: '#4BBE77' }}
         keyboardShouldPersistTaps="always"
-      >
+      refreshControl={<RefreshControl refreshing={refresh} onRefresh={()=>pullMe()}/>}>
         {props.dishes.map((dish) => (
           <View style={styles.dishBox}>
-            <Text style={styles.restaurantText}>Dish Name: {dish.name}</Text>
-
-            <Text style={styles.restaurantText}>Dish Price: {dish.price}</Text>
             <Image style={styles.logoPicture} source={icons.burger} />
+            <Text style={styles.restaurantText}>Dish Name : {dish.name}</Text>
+
+            <Text style={styles.restaurantText}>Dish Price : {dish.price}</Text>
+            
             <View
               style={{
                 flex: 1,
@@ -74,15 +107,15 @@ function Dishes(props) {
             justifyContent: "center",
           }}
         >
-          <TouchableOpacity
+          <TouchableOpacity style={styles.buttonAdd}
             onPress={() => props.navigation.navigate("AddDish")}
           >
             <Text
-              style={{ color: "#ff6c44", fontSize: 20, fontWeight: "bold" }}
+              style={styles.buttonTitle}
             >
-              ADD
+              +
             </Text>
-            <Image style={styles.icons} source={icons.plus} />
+            
           </TouchableOpacity>
         </View>
       </KeyboardAwareScrollView>
@@ -90,8 +123,11 @@ function Dishes(props) {
   );
 }
 
+
+ 
+
 const Tab = createMaterialTopTabNavigator();
-const restaurantTitle = "kfc";
+
 
 export default function HomeRestaurantView({ navigation }) {
   const [restaurantData, setRestaurantData] = useState({});
@@ -102,16 +138,19 @@ export default function HomeRestaurantView({ navigation }) {
 
   useEffect(() => {
     async function fetchMenu() {
+
+      const currentUser = firebase.auth().currentUser
+  let restaurantTitle = currentUser.uid;
       // route param uid instead of name
       const snapshot = await firebase
         .firestore()
         .collection("Restaurant")
-        .where("name", "==", restaurantTitle)
+        .where("id", "==", restaurantTitle)
         .get();
 
       console.log("docs", snapshot.docs);
 
-      const uid = snapshot.docs[0].id;
+      const uid = snapshot.docs[  0].id;
       console.log("restaurant uid", uid);
 
       const restaurantRef = firebase
@@ -159,10 +198,11 @@ export default function HomeRestaurantView({ navigation }) {
           tabBarLabelStyle: { fontSize: 20, color: "white" },
           //tabBarItemStyle: { width: 100 },
           tabBarStyle: { backgroundColor: "#4BBE77" },
+          
         }}
         //style={styles.top}
       >
-        <Tab.Screen name="My Account">
+        <Tab.Screen name="My Account" options={{ title: "My Account", headerBackVisible:false}} >
           {() => <MyAccount navigation={navigation}></MyAccount>}
         </Tab.Screen>
         <Tab.Screen name="Dishes">
