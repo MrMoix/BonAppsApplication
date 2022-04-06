@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { firebase } from "../../firebase/config";
-import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Image, Text, TextInput, TouchableOpacity, View, Button } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import styles from "./styles";
 import SwitchSelector from "react-native-switch-selector";
 import { color } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
 import icons from "../../constants/icons";
+// import DateTimePickerAndroid from '@react-native-community/datetimepicker'; 
 
 export default function TableTimeReservation({ navigation }) {
   const [dishName, setDishName] = useState("");
@@ -13,6 +14,7 @@ export default function TableTimeReservation({ navigation }) {
   const [studentPrice, setStudentPrice] = useState("");
   const [orderType, setOrderType] = useState(true);
   const [tablePlaces, setTablePlaces] = useState("");
+  // const [date, setDate] = useState(new Date(1598051730000));
 
   const restaurantTitle = "kfc";
   const addDish = async () => {
@@ -37,6 +39,28 @@ export default function TableTimeReservation({ navigation }) {
         navigation.navigate("HomeRestaurantView");
       });
   };
+
+  // const onChange = (event, selectedDate) => {
+  //   const currentDate = selectedDate;
+  //   setDate(currentDate);
+  // };
+
+  // const showMode = (currentMode) => {
+  //   DateTimePickerAndroid.open({
+  //     value: date,
+  //     onChange,
+  //     mode: currentMode,
+  //     is24Hour: true
+  //   })
+  // };
+
+  // const showDatepicker = () => {
+  //   showMode('date');
+  // };
+
+  // const showTimepicker = () => {
+  //   showMode('time');
+  // };
 
   return (
     <View style={styles.container}>
@@ -80,18 +104,17 @@ export default function TableTimeReservation({ navigation }) {
             />
           </View>
         )}
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonTitle}>Select a logo</Text>
-        </TouchableOpacity>
+{/*         
+        <View>
+          <View>
+            <Button onPress={showDatepicker} title="Show date picker!" />
+          </View>
+          <View>
+            <Button onPress={showTimepicker} title="Show time picker!" />
+          </View>
+          <Text>selected: {date.toLocaleString()}</Text>
+        </View> */}
 
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => {
-            addDish();
-          }}
-        >
-          <Text style={styles.buttonTitle}>Add to the menu</Text>
-        </TouchableOpacity>
       </KeyboardAwareScrollView>
     </View>
   );
