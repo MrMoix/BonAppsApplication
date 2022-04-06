@@ -71,14 +71,15 @@ export default function TableTimeReservation({ navigation }) {
         <Image style={styles.logo} source={require("../../assets/logo.png")} />
 
         <SwitchSelector
+          style={{ margin: 15 }}
           initial={0}
           onPress={(value) => {
             setOrderType(value);
           }}
-          textColor={color.purple} //'#7a44cf'
-          selectedColor={color.white}
-          buttonColor={color.purple}
-          borderColor={color.purple}
+          //textColor={"#4cce4a"}
+          //selectedColor={color.white}
+          buttonColor={"#4cce4a"}
+          //borderColor={"#4BBE77"}
           hasPadding
           options={[
             { label: "Eat in", value: true }, // imageIcon: images.feminino images.feminino = require('./path_to/assets/img/feminino.png')
@@ -92,7 +93,7 @@ export default function TableTimeReservation({ navigation }) {
         />
         {orderType && (
           <View>
-            <Text>Reserve table </Text>
+            <Text style={styles.normalText}>Reserve a table </Text>
             <TextInput
               style={styles.input}
               placeholder="Number of places"
@@ -102,6 +103,9 @@ export default function TableTimeReservation({ navigation }) {
               underlineColorAndroid="transparent"
               autoCapitalize="none"
             />
+            <TouchableOpacity style={styles.button}>
+              <Text style={styles.buttonTitle}>Reserve a table</Text>
+            </TouchableOpacity>
           </View>
         )}
 {/*         
