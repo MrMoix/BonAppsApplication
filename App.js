@@ -43,7 +43,7 @@ const NavigationDrawerStructure = (props) => {
 
 function HomeStack({ navigation }) {
   return (
-    <Stack.Navigator initialRouteName="Home" >
+    <Stack.Navigator initialRouteName="Home">
       <Stack.Screen
         name="HomeScreen"
         component={HomeScreen}
@@ -113,59 +113,51 @@ function JoinUsStack({ navigation }) {
 export default function App() {
   return (
     <NavigationContainer>
-<<<<<<< HEAD
       <Drawer.Navigator
-        initialRouteName="Home"
         screenOptions={{
           drawerStyle: {
             backgroundColor: "#4BBE77",
+            width: 240,
           },
+          drawerLabelStyle: {
+            color: "#fff",
+          },
+          drawerActiveTintColor: {
+            color: "#fff",
+          },
+          drawerActiveBackgroundColor: "#4cce4a",
         }}
       >
-        <Drawer.Screen name="Home" component={HomeStack} />
-        <Drawer.Screen name="Login" component={AuthStack} />
+        <Drawer.Screen
+          name="Home"
+          component={HomeStack}
+          options={{
+            headerStyle: {
+              backgroundColor: "#4BBE77",
+            },
+            headerTintColor: "#fff",
+          }}
+        />
+        <Drawer.Screen
+          name="Login"
+          component={AuthStack}
+          options={{
+            headerStyle: {
+              backgroundColor: "#4BBE77",
+            },
+            headerTintColor: "#fff",
+          }}
+        />
         <Drawer.Screen
           name="JoinUs"
           component={JoinUsStack}
           options={{
-            drawerActiveBackgroundColor: "#4BBE77",
+            headerStyle: {
+              backgroundColor: "#4BBE77",
+            },
+            headerTintColor: "#fff",
           }}
         />
-=======
-      <Drawer.Navigator screenOptions={{
-        drawerStyle: {
-          backgroundColor: '#4BBE77',
-          width: 240,
-        },
-        drawerLabelStyle : {
-          color: '#fff'
-        },
-        drawerActiveTintColor : {
-          color: '#fff'
-        },
-        drawerActiveBackgroundColor : '#4cce4a',
-      }} 
-      >
-        <Drawer.Screen name="Home" component={HomeStack} options={{
-        headerStyle: {
-          backgroundColor: '#4BBE77',
-        },
-        headerTintColor: "#fff"
-      }} />
-        <Drawer.Screen name="Login" component={AuthStack} options={{
-        headerStyle: {
-          backgroundColor: '#4BBE77',
-        },
-        headerTintColor: "#fff"
-      }} />
-        <Drawer.Screen name="JoinUs" component={JoinUsStack} options={{
-        headerStyle: {
-          backgroundColor: '#4BBE77',
-        },
-        headerTintColor: "#fff"
-      }}
-       />
->>>>>>> c68a6fd849ad1be2ff64f2bdd80ce5c047f6a7d1
       </Drawer.Navigator>
     </NavigationContainer>
   );

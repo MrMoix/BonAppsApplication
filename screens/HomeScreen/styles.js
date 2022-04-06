@@ -3,15 +3,8 @@ import { StyleSheet } from "react-native";
 export default StyleSheet.create({
   container: {
     flex: 1,
-<<<<<<< HEAD
-    alignItems: "center",
-    backgroundColor: "#4BBE77",
-=======
     alignItems: "flex-start",
-    backgroundColor: "#4BBE77"
-    
-   
->>>>>>> c68a6fd849ad1be2ff64f2bdd80ce5c047f6a7d1
+    backgroundColor: "#4BBE77",
   },
   logo: {
     //flex: 1,
@@ -91,22 +84,17 @@ export default StyleSheet.create({
     width: 80,
     marginTop: 10,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   restaurantCard: {
     flexDirection: "row",
     flexWrap: "wrap",
     direction: "ltr",
     backgroundColor: "#E8EFCB",
-<<<<<<< HEAD
-    margin: 20,
-    //marginRight: 15,
-=======
     marginBottom: 20,
     marginRight: 15,
-    marginLeft:15,
+    marginLeft: 15,
     borderRadius: 5,
->>>>>>> c68a6fd849ad1be2ff64f2bdd80ce5c047f6a7d1
   },
   restaurantContainer: {
     flex: 2,
@@ -169,7 +157,7 @@ export default StyleSheet.create({
     backgroundColor: "#36844E",
     //justifyContent: "center",
     borderRadius: 8,
-    justifyContent: "center"
+    justifyContent: "center",
   },
   dishBoxIcons: {
     height: 25,
