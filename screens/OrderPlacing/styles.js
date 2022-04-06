@@ -40,4 +40,10 @@ export default StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
   },
+  normalText: {
+    color: "white",
+    fontSize: 22,
+    marginTop: 20,
+    textAlign: "center",
+  },
 });
