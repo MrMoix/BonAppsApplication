@@ -11,6 +11,7 @@ import LogoCharging from "./screens/RegistrationScreen/LogoCharging";
 import { LogBox } from "react-native";
 import BenefitsScreen from "./screens/HomeScreen/BenefitsScreen";
 import AddDish from "./screens/HomeScreen/AddDish";
+import TableTimeReservation from "./screens/OrderPlacing/TableTimeReservation";
 import { color } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
 
 const Stack = createStackNavigator();
@@ -110,6 +111,21 @@ function JoinUsStack({ navigation }) {
   );
 }
 
+function OrderingStack({ navigation }) {
+  return (
+    <Stack.Navigator initialRouteName="Placing Order">
+      <Stack.Screen
+        name="TableTimeReservation"
+        component={TableTimeReservation}
+        options={{
+          title: "",
+          headerTransparent: true,
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
 export default function App() {
   return (
     <NavigationContainer>
@@ -151,6 +167,16 @@ export default function App() {
         <Drawer.Screen
           name="JoinUs"
           component={JoinUsStack}
+          options={{
+            headerStyle: {
+              backgroundColor: "#4BBE77",
+            },
+            headerTintColor: "#fff",
+          }}
+        />
+        <Drawer.Screen
+          name="Placing Order"
+          component={OrderingStack}
           options={{
             headerStyle: {
               backgroundColor: "#4BBE77",

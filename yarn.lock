@@ -5348,6 +5348,13 @@ react-native-screens@~3.10.1:
     react-freeze "^1.0.0"
     warn-once "^0.1.0"
 
+react-native-switch-selector@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-switch-selector/-/react-native-switch-selector-2.2.0.tgz#75e28d694c702434b14468f04ee82edff96fb928"
+  integrity sha512-dbw5rOJqJIuhlzzmGCav1zeoidNVf5ES2jZtXltKItHdbx+SeXBOvRFLy7xbl2fg9pT121HMQ8lzx6qXyrrLEw==
+  dependencies:
+    prop-types "^15.7.2"
+
 react-native-tab-view@^3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/react-native-tab-view/-/react-native-tab-view-3.1.1.tgz#1f8d7a835ab4f5b1b1407ec8dddc1053b53fa3c6"
