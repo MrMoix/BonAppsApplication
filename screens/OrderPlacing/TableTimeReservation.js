@@ -1,66 +1,44 @@
 import React, { useState, useEffect } from "react";
 import { firebase } from "../../firebase/config";
-import { Image, Text, TextInput, TouchableOpacity, View, Button } from "react-native";
+import {
+  Image,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  Button,
+} from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import styles from "./styles";
 import SwitchSelector from "react-native-switch-selector";
-import { color } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
 import icons from "../../constants/icons";
-// import DateTimePickerAndroid from '@react-native-community/datetimepicker'; 
+import DateTimePicker from "@react-native-community/datetimepicker";
 
 export default function TableTimeReservation({ navigation }) {
-  const [dishName, setDishName] = useState("");
-  const [dishPrice, setDishPrice] = useState("");
-  const [studentPrice, setStudentPrice] = useState("");
   const [orderType, setOrderType] = useState(true);
   const [tablePlaces, setTablePlaces] = useState("");
-  // const [date, setDate] = useState(new Date(1598051730000));
+  const [date, setDate] = useState(new Date());
+  const [mode, setMode] = useState("date");
+  const [show, setShow] = useState(false);
 
-  const restaurantTitle = "kfc";
-  const addDish = async () => {
-    const currentUser = firebase.auth().currentUser;
-    const restaurantTitle = currentUser.uid;
-    const snapshot = await firebase
-      .firestore()
-      .collection("Restaurant")
-      .where("id", "==", restaurantTitle)
-      .get();
-
-    const uid = snapshot.docs[0].id;
-    const restaurantRef = firebase
-      .firestore()
-      .collection("Restaurant")
-      .doc(uid);
-
-    const res = await restaurantRef
-      .collection("Dishes")
-      .add({ name: dishName, price: dishPrice })
-      .then(() => {
-        navigation.navigate("HomeRestaurantView");
-      });
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate;
+    setShow(false);
+    setDate(currentDate);
   };
 
-  // const onChange = (event, selectedDate) => {
-  //   const currentDate = selectedDate;
-  //   setDate(currentDate);
-  // };
+  const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  };
 
-  // const showMode = (currentMode) => {
-  //   DateTimePickerAndroid.open({
-  //     value: date,
-  //     onChange,
-  //     mode: currentMode,
-  //     is24Hour: true
-  //   })
-  // };
+  const showDatepicker = () => {
+    showMode("date");
+  };
 
-  // const showDatepicker = () => {
-  //   showMode('date');
-  // };
-
-  // const showTimepicker = () => {
-  //   showMode('time');
-  // };
+  const showTimepicker = () => {
+    showMode("time");
+  };
 
   return (
     <View style={styles.container}>
@@ -108,17 +86,31 @@ export default function TableTimeReservation({ navigation }) {
             </TouchableOpacity>
           </View>
         )}
-{/*         
+
         <View>
           <View>
-            <Button onPress={showDatepicker} title="Show date picker!" />
+            <TouchableOpacity style={styles.button} onPress={showDatepicker}>
+              <Text style={styles.buttonTitle}>Pick a day</Text>
+            </TouchableOpacity>
           </View>
           <View>
-            <Button onPress={showTimepicker} title="Show time picker!" />
+            <TouchableOpacity style={styles.button} onPress={showTimepicker}>
+              <Text style={styles.buttonTitle}>Pick time</Text>
+            </TouchableOpacity>
           </View>
-          <Text>selected: {date.toLocaleString()}</Text>
-        </View> */}
-
+          <Text style={styles.normalText}>
+            Time chosen: {date.toLocaleString()}
+          </Text>
+          {show && (
+            <DateTimePicker
+              testID="dateTimePicker"
+              value={date}
+              mode={mode}
+              is24Hour={true}
+              onChange={onChange}
+            />
+          )}
+        </View>
       </KeyboardAwareScrollView>
     </View>
   );
