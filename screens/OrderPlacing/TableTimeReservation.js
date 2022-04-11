@@ -11,15 +11,22 @@ import {
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import styles from "./styles";
 import SwitchSelector from "react-native-switch-selector";
-import icons from "../../constants/icons";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
-export default function TableTimeReservation({ navigation }) {
+export default function TableTimeReservation({ navigation, params }) {
   const [orderType, setOrderType] = useState(true);
   const [tablePlaces, setTablePlaces] = useState("");
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
+  const [orderDishes, setOrderDishes] = useState([]);
+  const [uid, setUid] = useState("");
+  const [restaurantid, setRestaurantid] = useState("");
+  const [seatAmount, setSeatAmount] = useState(0);
+  const [orderTime, setOrderTime] = useState(new Date());
+  const [reservationTime, setReservationTime] = useState(new Date());
+  const [orderStatus, setOrderStatus] = useState("");
+  const [totalPrice, setTotalPrice] = useState(0.0);
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
@@ -39,6 +46,26 @@ export default function TableTimeReservation({ navigation }) {
   const showTimepicker = () => {
     showMode("time");
   };
+
+  const reserveTable = () => {
+    setOrderDishes(params.dishList);
+    setUid(params.uid);
+    setRestaurantid(params.restaurantid);
+    setOrderTime(new Date());
+    setReservationTime(date);
+    setOrderStatus("Ordered");
+    setTotalPrice(params.dishes.reduce((a, c) => { return a + c.price}, 0))
+    const order = {orderDishes, uid, restaurantid, seatAmount, orderTime, reservationTime, orderStatus, totalPrice}
+    const usersRef = firebase.firestore().collection("Orders");
+    usersRef
+      .set(order)
+      .then(() => {
+        navigation.navigate("ReservationSuccess");
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  }
 
   return (
     <View style={styles.container}>
@@ -80,10 +107,8 @@ export default function TableTimeReservation({ navigation }) {
               value={tablePlaces}
               underlineColorAndroid="transparent"
               autoCapitalize="none"
+              onChange={(value) = setSeatAmount(value)}
             />
-            <TouchableOpacity style={styles.button}>
-              <Text style={styles.buttonTitle}>Reserve a table</Text>
-            </TouchableOpacity>
           </View>
         )}
 
@@ -110,6 +135,9 @@ export default function TableTimeReservation({ navigation }) {
               onChange={onChange}
             />
           )}
+          <TouchableOpacity style={styles.button} onPress={reserveTable}>
+              <Text style={styles.buttonTitle}>Reserve a table</Text>
+          </TouchableOpacity>
         </View>
       </KeyboardAwareScrollView>
     </View>

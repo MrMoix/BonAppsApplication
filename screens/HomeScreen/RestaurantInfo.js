@@ -94,16 +94,11 @@ export default function RestaurantInfo({ route, navigation }) {
     async function fetchMenu() {
       const user = firebase.auth().currentUser;
       // route param uid instead of name
-      console.log("test12 " + user.uid);
       const snapshot = await firebase
         .firestore()
         .collection("Restaurant/" + user.uid)
         .get();
-
-      console.log("docs", snapshot.docs);
-
       const uid = snapshot.docs[0].id;
-      console.log("restaurant uid", uid);
 
       //
 
@@ -123,8 +118,6 @@ export default function RestaurantInfo({ route, navigation }) {
       restaurantDishes.forEach(async (dish) => {
         dishList.push(dish.data());
       });
-
-      console.log("restaurant dishes", dishList);
 
       setDishes(dishList);
     }
