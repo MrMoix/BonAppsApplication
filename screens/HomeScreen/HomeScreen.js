@@ -8,11 +8,11 @@ export default function HomeScreen({ navigation }) {
     firebase
       .auth()
       .signOut()
-      .then(() => navigation.push("LoginScreen"));
+      .then(() => navigation.navigate("Login"));
   };
 
   const openRestaurant = (restaurant) => {
-    navigation.push("RestaurantInfo", {
+    navigation.navigate("RestaurantInfo", {
       restaurantTitle: restaurant,
     });
   };
