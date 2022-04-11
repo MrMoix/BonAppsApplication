@@ -12,6 +12,7 @@ import { LogBox } from "react-native";
 import BenefitsScreen from "./screens/HomeScreen/BenefitsScreen";
 import AddDish from "./screens/HomeScreen/AddDish";
 import TableTimeReservation from "./screens/OrderPlacing/TableTimeReservation";
+import CartScreen from "./screens/Cart/Cart";
 import { color } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
 
 const Stack = createStackNavigator();
@@ -126,6 +127,21 @@ function OrderingStack({ navigation }) {
   );
 }
 
+function CartStack({ navigation }) {
+  return (
+    <Stack.Navigator initialRouteName="Cart">
+      <Stack.Screen
+        name="CartShopping"
+        component={CartScreen}
+        options={{
+          title: "",
+          headerTransparent: true,
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
+
 export default function App() {
   return (
     <NavigationContainer>
@@ -184,6 +200,16 @@ export default function App() {
             headerTintColor: "#fff",
           }}
         />
+        <Drawer.Screen
+        name="Cart"
+        component={CartStack}
+        options={{
+          headerStyle: {
+            backgroundColor: "#4BBE77",
+          },
+          headerTintColor: "#fff",
+        }}
+      />
       </Drawer.Navigator>
     </NavigationContainer>
   );
