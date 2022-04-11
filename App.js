@@ -8,13 +8,12 @@ import RestaurantSignup from "./screens/RegistrationScreen/RestaurantSignup";
 import RestaurantInfo from "./screens/HomeScreen/RestaurantInfo";
 import HomeRestaurantView from "./screens/HomeScreen/HomeRestaurantView";
 import LogoCharging from "./screens/RegistrationScreen/LogoCharging";
-import { LogBox, Button, Image } from "react-native";
+import { LogBox } from "react-native";
 import BenefitsScreen from "./screens/HomeScreen/BenefitsScreen";
 import AddDish from "./screens/HomeScreen/AddDish";
 import TableTimeReservation from "./screens/OrderPlacing/TableTimeReservation";
 import CartScreen from "./screens/Cart/Cart";
 import { color } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
-import { TouchableOpacity } from "react-native-gesture-handler";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -159,14 +158,6 @@ export default function App() {
             color: "#fff",
           },
           drawerActiveBackgroundColor: "#4cce4a",
-          headerRight: () => (
-            <TouchableOpacity>
-              <Image
-                source={require("../BonAppsApplication/assets/icons/cartShopping.png")}
-                style={{ width: 25, height: 25, marginRight: 10 }}
-              />
-            </TouchableOpacity>
-          )
         }}
       >
         <Drawer.Screen
@@ -209,6 +200,16 @@ export default function App() {
             headerTintColor: "#fff",
           }}
         />
+        <Drawer.Screen
+        name="Cart"
+        component={CartStack}
+        options={{
+          headerStyle: {
+            backgroundColor: "#4BBE77",
+          },
+          headerTintColor: "#fff",
+        }}
+      />
       </Drawer.Navigator>
     </NavigationContainer>
   );
