@@ -49,6 +49,16 @@ function Menu(props) {
               {" "}
               Dish Price : {dish.price}
             </Text>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: "row",
+              }}
+            >
+              <TouchableOpacity>
+                <Image style={styles.dishBoxIcons} source={icons.plus} />
+              </TouchableOpacity>
+            </View>
           </View>
         ))}
       </KeyboardAwareScrollView>
@@ -58,24 +68,36 @@ function Menu(props) {
 
 function Info(props) {
   return (
-    <View style={{ marginTop: 120, backgroundColor: "#4BBE77" }}>
-      <Image
-        style={styles.logoPicture}
-        source={require("../../assets/images/great_food.png")}
-      />
-      <Text style={styles.title}>{props.restaurantData.name}</Text>
-      <Text style={styles.restaurantText}>
-        About: {props.restaurantData.description}
-      </Text>
-      <Text style={styles.restaurantText}>
-        Address: {props.restaurantData.address}
-      </Text>
-      <Text style={styles.restaurantText}>
-        Email: {props.restaurantData.email}
-      </Text>
-      <Text style={styles.restaurantText}>
-        Phone number: {props.restaurantData.phoneNumber}
-      </Text>
+    <View
+      style={{
+        flex: 8,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#4BBE77",
+      }}
+    >
+      <KeyboardAwareScrollView
+        style={{ flex: 1, width: "100%", borderRadius: 5 }}
+        keyboardShouldPersistTaps="always"
+      >
+        <Image
+          style={styles.logoPicture}
+          source={require("../../assets/images/great_food.png")}
+        />
+        <Text style={styles.title}>{props.restaurantData.name}</Text>
+        <Text style={styles.restaurantText}>
+          About: {props.restaurantData.description}
+        </Text>
+        <Text style={styles.restaurantText}>
+          Address: {props.restaurantData.address}
+        </Text>
+        <Text style={styles.restaurantText}>
+          Email: {props.restaurantData.email}
+        </Text>
+        <Text style={styles.restaurantText}>
+          Phone number: {props.restaurantData.phoneNumber}
+        </Text>
+      </KeyboardAwareScrollView>
     </View>
   );
 }
@@ -92,12 +114,13 @@ export default function RestaurantInfo({ route, navigation }) {
 
   useEffect(() => {
     async function fetchMenu() {
-      const user = firebase.auth().currentUser;
+      //const user = firebase.auth().currentUser;
       // route param uid instead of name
-      console.log("test12 " + user.uid);
+      // console.log("test12 " + user.uid);
       const snapshot = await firebase
         .firestore()
-        .collection("Restaurant/" + user.uid)
+        .collection("Restaurant")
+        .where("name", "==", restaurantTitle)
         .get();
 
       console.log("docs", snapshot.docs);
@@ -114,9 +137,7 @@ export default function RestaurantInfo({ route, navigation }) {
       const restaurantDoc = await restaurantRef.get();
       setRestaurantData(restaurantDoc.data());
 
-      const restaurantDishes = await restaurantRef
-        .collection(user.uid + "Dishes")
-        .get();
+      const restaurantDishes = await restaurantRef.collection("Dishes").get();
 
       let dishList = [];
 
