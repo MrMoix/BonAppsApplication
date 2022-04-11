@@ -10,7 +10,7 @@ import styles from "./styles";
 export default function TableTimeReservation({ navigation }) {
 
   const navigateHome = () => {
-    navigation.navigate("Home");
+    navigation.navigate("HomeScreen");
   };
 
   return (

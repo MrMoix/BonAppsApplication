@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import { LoginScreen, HomeScreen, RegistrationScreen } from "./screens";
+import { LoginScreen, HomeScreen, RegistrationScreen, OrderPlacing } from "./screens";
 import RestaurantSignup from "./screens/RegistrationScreen/RestaurantSignup";
 import RestaurantInfo from "./screens/HomeScreen/RestaurantInfo";
 import HomeRestaurantView from "./screens/HomeScreen/HomeRestaurantView";
@@ -13,6 +13,7 @@ import BenefitsScreen from "./screens/HomeScreen/BenefitsScreen";
 import AddDish from "./screens/HomeScreen/AddDish";
 import TableTimeReservation from "./screens/OrderPlacing/TableTimeReservation";
 import CartScreen from "./screens/Cart/Cart";
+import ReservationSuccess from "./screens/OrderPlacing/ReservationSuccess";
 import { color } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
 
 const Stack = createStackNavigator();
@@ -71,6 +72,22 @@ function HomeStack({ navigation }) {
         component={AddDish}
         options={{ title: "", headerTransparent: true }}
       />
+      <Stack.Screen
+        name="TableTimeReservation"
+        component={TableTimeReservation}
+        options={{
+          title: "",
+          headerTransparent: true,
+        }}
+      />
+      <Stack.Screen
+        name="ReservationSuccess"
+        component={ReservationSuccess}
+        options={{
+          title: "",
+          headerTransparent: true,
+        }}
+      />
     </Stack.Navigator>
   );
 }
@@ -114,15 +131,8 @@ function JoinUsStack({ navigation }) {
 
 function OrderingStack({ navigation }) {
   return (
-    <Stack.Navigator initialRouteName="Placing Order">
-      <Stack.Screen
-        name="TableTimeReservation"
-        component={TableTimeReservation}
-        options={{
-          title: "",
-          headerTransparent: true,
-        }}
-      />
+    <Stack.Navigator initialRouteName="PlacingOrder">
+      
     </Stack.Navigator>
   );
 }
@@ -191,7 +201,7 @@ export default function App() {
           }}
         />
         <Drawer.Screen
-          name="Placing Order"
+          name="PlacingOrder"
           component={OrderingStack}
           options={{
             headerStyle: {

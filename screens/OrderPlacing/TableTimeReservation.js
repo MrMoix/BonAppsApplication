@@ -13,7 +13,7 @@ import styles from "./styles";
 import SwitchSelector from "react-native-switch-selector";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
-export default function TableTimeReservation({ navigation, params }) {
+export default function TableTimeReservation({ route, navigation }) {
   const [orderType, setOrderType] = useState(true);
   const [tablePlaces, setTablePlaces] = useState("");
   const [date, setDate] = useState(new Date());
@@ -27,6 +27,8 @@ export default function TableTimeReservation({ navigation, params }) {
   const [reservationTime, setReservationTime] = useState(new Date());
   const [orderStatus, setOrderStatus] = useState("");
   const [totalPrice, setTotalPrice] = useState(0.0);
+
+  const params = route.params;
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
@@ -54,11 +56,12 @@ export default function TableTimeReservation({ navigation, params }) {
     setOrderTime(new Date());
     setReservationTime(date);
     setOrderStatus("Ordered");
-    setTotalPrice(params.dishes.reduce((a, c) => { return a + c.price}, 0))
+    setTotalPrice(params.dishList.reduce((a, c) => { return a + c.price}, 0))
     const order = {orderDishes, uid, restaurantid, seatAmount, orderTime, reservationTime, orderStatus, totalPrice}
-    const usersRef = firebase.firestore().collection("Orders");
-    usersRef
-      .set(order)
+    const dbRef = firebase.firestore();
+    dbRef
+      .collection("Orders")
+      .add(order)
       .then(() => {
         navigation.navigate("ReservationSuccess");
       })
@@ -103,11 +106,10 @@ export default function TableTimeReservation({ navigation, params }) {
               style={styles.input}
               placeholder="Number of places"
               placeholderTextColor="#aaaaaa"
-              onChangeText={(text) => setTablePlaces(text)}
+              onChangeText={(text) => setSeatAmount(text)}
               value={tablePlaces}
               underlineColorAndroid="transparent"
               autoCapitalize="none"
-              onChange={(value) = setSeatAmount(value)}
             />
           </View>
         )}
