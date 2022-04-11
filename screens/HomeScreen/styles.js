@@ -163,5 +163,7 @@ export default StyleSheet.create({
     height: 25,
     width: 25,
     margin: 20,
+    tintColor: "white",
+    borderColor: "white",
   },
 });
