@@ -3,7 +3,12 @@ import React, { useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import { LoginScreen, HomeScreen, RegistrationScreen, OrderPlacing } from "./screens";
+import {
+  LoginScreen,
+  HomeScreen,
+  RegistrationScreen,
+  OrderPlacing,
+} from "./screens";
 import RestaurantSignup from "./screens/RegistrationScreen/RestaurantSignup";
 import RestaurantInfo from "./screens/HomeScreen/RestaurantInfo";
 import HomeRestaurantView from "./screens/HomeScreen/HomeRestaurantView";
@@ -14,6 +19,7 @@ import AddDish from "./screens/HomeScreen/AddDish";
 import TableTimeReservation from "./screens/OrderPlacing/TableTimeReservation";
 import CartScreen from "./screens/Cart/Cart";
 import ReservationSuccess from "./screens/OrderPlacing/ReservationSuccess";
+import DummyScreen from "./screens/HomeScreen/DummyScreen";
 import { color } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
 
 const Stack = createStackNavigator();
@@ -81,6 +87,11 @@ function HomeStack({ navigation }) {
         }}
       />
       <Stack.Screen
+        name="DummyScreen"
+        component={DummyScreen}
+        options={{ title: "", headerTransparent: true }}
+      />
+      <Stack.Screen
         name="ReservationSuccess"
         component={ReservationSuccess}
         options={{
@@ -130,11 +141,7 @@ function JoinUsStack({ navigation }) {
 }
 
 function OrderingStack({ navigation }) {
-  return (
-    <Stack.Navigator initialRouteName="PlacingOrder">
-      
-    </Stack.Navigator>
-  );
+  return <Stack.Navigator initialRouteName="PlacingOrder"></Stack.Navigator>;
 }
 
 function CartStack({ navigation }) {
@@ -211,15 +218,15 @@ export default function App() {
           }}
         />
         <Drawer.Screen
-        name="Cart"
-        component={CartStack}
-        options={{
-          headerStyle: {
-            backgroundColor: "#4BBE77",
-          },
-          headerTintColor: "#fff",
-        }}
-      />
+          name="Cart"
+          component={CartStack}
+          options={{
+            headerStyle: {
+              backgroundColor: "#4BBE77",
+            },
+            headerTintColor: "#fff",
+          }}
+        />
       </Drawer.Navigator>
     </NavigationContainer>
   );

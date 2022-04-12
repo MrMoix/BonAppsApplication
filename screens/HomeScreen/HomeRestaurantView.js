@@ -46,6 +46,7 @@ function MyAccount({ navigation }, props) {
   );
 }
 const restaurantTitle = "kfc";
+
 function Dishes(props) {
   const restaurantTitle = "kfc";
   const deleteDish = () => {

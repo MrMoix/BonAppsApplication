@@ -14,6 +14,15 @@ import icons from "../../constants/icons";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 function Menu(props) {
+  const addToOrder = (dish) => {
+    let dishName = dish;
+    //let dishPrice = dish.price;
+
+    props.navigation.navigate("DummyScreen", {
+      dishName: dishName,
+      // dishPrice: dishPrice,
+    });
+  };
   console.log("TEST" + props);
   const wait = (timeout) => {
     return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -55,7 +64,7 @@ function Menu(props) {
                 flexDirection: "row",
               }}
             >
-              <TouchableOpacity>
+              <TouchableOpacity onPress={(dish) => addToOrder(dish.name)}>
                 <Image style={styles.dishBoxIcons} source={icons.plus} />
               </TouchableOpacity>
             </View>
@@ -160,7 +169,7 @@ export default function RestaurantInfo({ route, navigation }) {
         }}
       >
         <Tab.Screen name="Menu">
-          {() => <Menu dishes={dishes}></Menu>}
+          {() => <Menu dishes={dishes} navigation={navigation}></Menu>}
         </Tab.Screen>
         <Tab.Screen name="Info">
           {() => <Info restaurantData={restaurantData}></Info>}
