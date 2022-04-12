@@ -14,13 +14,13 @@ import icons from "../../constants/icons";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 function Menu(props) {
-  const addToOrder = (dish) => {
+  const addToOrder = (dish, price) => {
     let dishName = dish;
-    //let dishPrice = dish.price;
+    let dishPrice = price;
 
     props.navigation.navigate("DummyScreen", {
       dishName: dishName,
-      // dishPrice: dishPrice,
+      dishPrice: dishPrice,
     });
   };
   console.log("TEST" + props);
@@ -57,6 +57,7 @@ function Menu(props) {
             <Text style={styles.restaurantText}>
               {" "}
               Dish Price : {dish.price}
+              {console.log("ZZZZZZZZ dish ID: ", dish.name)}
             </Text>
             <View
               style={{
@@ -64,7 +65,9 @@ function Menu(props) {
                 flexDirection: "row",
               }}
             >
-              <TouchableOpacity onPress={(dish) => addToOrder(dish.name)}>
+              <TouchableOpacity
+                onPress={() => addToOrder(dish.name, dish.price)}
+              >
                 <Image style={styles.dishBoxIcons} source={icons.plus} />
               </TouchableOpacity>
             </View>
