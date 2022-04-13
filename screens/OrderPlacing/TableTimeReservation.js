@@ -15,19 +15,10 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 
 export default function TableTimeReservation({ route, navigation }) {
   const [orderType, setOrderType] = useState(true);
-  const [tablePlaces, setTablePlaces] = useState("");
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
-  const [orderDishes, setOrderDishes] = useState([]);
-  const [uid, setUid] = useState("");
-  const [restaurantid, setRestaurantid] = useState("");
-  const [seatAmount, setSeatAmount] = useState(0);
-  const [orderTime, setOrderTime] = useState(new Date());
-  const [reservationTime, setReservationTime] = useState(new Date());
-  const [orderStatus, setOrderStatus] = useState("");
-  const [totalPrice, setTotalPrice] = useState(0.0);
-
+  const [seatAmount, setSeatAmount] = useState("");
   const params = route.params;
 
   const onChange = (event, selectedDate) => {
@@ -50,16 +41,8 @@ export default function TableTimeReservation({ route, navigation }) {
   };
 
   const reserveTable = () => {
-    setOrderDishes(params.dishList);
-    setUid(params.uid);
-    setRestaurantid(params.restaurantid);
-    setOrderTime(new Date());
-    setReservationTime(date);
-    setOrderStatus("Ordered");
-    setTotalPrice(params.dishList.reduce((a, c) => { return a + c.price}, 0))
-    const order = {orderDishes, uid, restaurantid, seatAmount, orderTime, reservationTime, orderStatus, totalPrice}
-    const dbRef = firebase.firestore();
-    dbRef
+    const order = {dishList: params.dishList, uid: params.uid, restaurantid: params.restaurantid, seatAmount, orderTime: new Date(), date, orderStatus: "Ordered", totalPrice: params.dishList.reduce((a, c) => { return a + c.price}, 0)};
+    firebase.firestore()
       .collection("Orders")
       .add(order)
       .then(() => {
@@ -106,8 +89,8 @@ export default function TableTimeReservation({ route, navigation }) {
               style={styles.input}
               placeholder="Number of places"
               placeholderTextColor="#aaaaaa"
-              onChangeText={(text) => setSeatAmount(text)}
-              value={tablePlaces}
+              onChangeText={(text) => setSeatAmount(parseInt(text))}
+              value={seatAmount + ""}
               underlineColorAndroid="transparent"
               autoCapitalize="none"
             />
@@ -137,7 +120,7 @@ export default function TableTimeReservation({ route, navigation }) {
               onChange={onChange}
             />
           )}
-          <TouchableOpacity style={styles.button} onPress={reserveTable}>
+          <TouchableOpacity style={styles.button} onPress={() => reserveTable()}>
               <Text style={styles.buttonTitle}>Reserve a table</Text>
           </TouchableOpacity>
         </View>

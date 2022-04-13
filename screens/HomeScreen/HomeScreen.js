@@ -17,12 +17,13 @@ export default function HomeScreen({ navigation }) {
     });
   };
 
+  // move to cart order process
   const orderTest = () => {
     const dishList = [{name: "fried chicken", price: 10.99},{name: "fried chicken burger", price: 12.99}];
-    navigation.push("TableTimeReservation", {
+    navigation.navigate("TableTimeReservation", {
       dishList: dishList,
       uid: "2sH1gPONg3MvwYMDn4LU3aGRZAN2",
-      restaurantid: "L81dYiej2fgz6UQFAMV6"
+      restaurantid: "L81dYiej2fgz6UQFAMV6",
     });
   };
 
