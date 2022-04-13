@@ -17,6 +17,16 @@ export default function HomeScreen({ navigation }) {
     });
   };
 
+  // move to cart order process
+  const orderTest = () => {
+    const dishList = [{name: "fried chicken", price: 10.99},{name: "fried chicken burger", price: 12.99}];
+    navigation.navigate("TableTimeReservation", {
+      dishList: dishList,
+      uid: "2sH1gPONg3MvwYMDn4LU3aGRZAN2",
+      restaurantid: "L81dYiej2fgz6UQFAMV6",
+    });
+  };
+
   return (
     <View style={styles.container}>
       <Image style={styles.logo} source={require("../../assets/logo.png")} />
@@ -130,6 +140,11 @@ export default function HomeScreen({ navigation }) {
       <Text>Home Screen</Text>
       <TouchableOpacity style={styles.button} onPress={() => onLogOutPress()}>
         <Text style={styles.buttonTitle}> Log Out </Text>
+      </TouchableOpacity>
+
+      {/* test ordering */}
+      <TouchableOpacity style={styles.button} onPress={() => orderTest()}>
+        <Text style={styles.buttonTitle}> Test Order </Text>
       </TouchableOpacity>
     </View>
   );

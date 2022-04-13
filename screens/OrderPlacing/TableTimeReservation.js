@@ -11,15 +11,15 @@ import {
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import styles from "./styles";
 import SwitchSelector from "react-native-switch-selector";
-import icons from "../../constants/icons";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
-export default function TableTimeReservation({ navigation }) {
+export default function TableTimeReservation({ route, navigation }) {
   const [orderType, setOrderType] = useState(true);
-  const [tablePlaces, setTablePlaces] = useState("");
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
+  const [seatAmount, setSeatAmount] = useState("");
+  const params = route.params;
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate;
@@ -39,6 +39,19 @@ export default function TableTimeReservation({ navigation }) {
   const showTimepicker = () => {
     showMode("time");
   };
+
+  const reserveTable = () => {
+    const order = {dishList: params.dishList, uid: params.uid, restaurantid: params.restaurantid, seatAmount, orderTime: new Date(), date, orderStatus: "Ordered", totalPrice: params.dishList.reduce((a, c) => { return a + c.price}, 0)};
+    firebase.firestore()
+      .collection("Orders")
+      .add(order)
+      .then(() => {
+        navigation.navigate("ReservationSuccess");
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  }
 
   return (
     <View style={styles.container}>
@@ -76,14 +89,11 @@ export default function TableTimeReservation({ navigation }) {
               style={styles.input}
               placeholder="Number of places"
               placeholderTextColor="#aaaaaa"
-              onChangeText={(text) => setTablePlaces(text)}
-              value={tablePlaces}
+              onChangeText={(text) => setSeatAmount(parseInt(text))}
+              value={seatAmount + ""}
               underlineColorAndroid="transparent"
               autoCapitalize="none"
             />
-            <TouchableOpacity style={styles.button}>
-              <Text style={styles.buttonTitle}>Reserve a table</Text>
-            </TouchableOpacity>
           </View>
         )}
 
@@ -110,6 +120,9 @@ export default function TableTimeReservation({ navigation }) {
               onChange={onChange}
             />
           )}
+          <TouchableOpacity style={styles.button} onPress={() => reserveTable()}>
+              <Text style={styles.buttonTitle}>Reserve a table</Text>
+          </TouchableOpacity>
         </View>
       </KeyboardAwareScrollView>
     </View>
