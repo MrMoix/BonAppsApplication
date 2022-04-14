@@ -72,22 +72,6 @@ function HomeStack({ navigation }) {
         component={AddDish}
         options={{ title: "", headerTransparent: true }}
       />
-      <Stack.Screen
-        name="TableTimeReservation"
-        component={TableTimeReservation}
-        options={{
-          title: "",
-          headerTransparent: true,
-        }}
-      />
-      <Stack.Screen
-        name="ReservationSuccess"
-        component={ReservationSuccess}
-        options={{
-          title: "",
-          headerTransparent: true,
-        }}
-      />
     </Stack.Navigator>
   );
 }
@@ -129,20 +113,28 @@ function JoinUsStack({ navigation }) {
   );
 }
 
-function OrderingStack({ navigation }) {
-  return (
-    <Stack.Navigator initialRouteName="PlacingOrder">
-      
-    </Stack.Navigator>
-  );
-}
-
 function CartStack({ navigation }) {
   return (
     <Stack.Navigator initialRouteName="Cart">
       <Stack.Screen
         name="CartShopping"
         component={CartScreen}
+        options={{
+          title: "",
+          headerTransparent: true,
+        }}
+      />
+      <Stack.Screen
+        name="TableTimeReservation"
+        component={TableTimeReservation}
+        options={{
+          title: "",
+          headerTransparent: true,
+        }}
+      />
+      <Stack.Screen
+        name="ReservationSuccess"
+        component={ReservationSuccess}
         options={{
           title: "",
           headerTransparent: true,
@@ -191,18 +183,8 @@ export default function App() {
           }}
         />
         <Drawer.Screen
-          name="JoinUs"
+          name="Join Us"
           component={JoinUsStack}
-          options={{
-            headerStyle: {
-              backgroundColor: "#4BBE77",
-            },
-            headerTintColor: "#fff",
-          }}
-        />
-        <Drawer.Screen
-          name="PlacingOrder"
-          component={OrderingStack}
           options={{
             headerStyle: {
               backgroundColor: "#4BBE77",
