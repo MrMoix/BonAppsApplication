@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { firebase } from "../../firebase/config";
+import { collection, doc, setDoc, arrayUnion } from "firebase/firestore";
 import {
   Text,
   Image,
@@ -12,9 +13,19 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import icons from "../../constants/icons";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { setStatusBarBackgroundColor } from "expo-status-bar";
 
 function Menu(props) {
-  console.log("TEST" + props);
+  const addToOrder = (dish) => {
+
+    const currentUid = firebase.auth().currentUser.uid;
+
+    const currentUserCart = firebase.firestore().collection('Clients').doc(currentUid);
+
+    currentUserCart.update({currentCartItem: firebase.firestore.FieldValue.arrayUnion(dish)})
+
+    alert("Item added to cart !");
+  }
   const wait = (timeout) => {
     return new Promise((resolve) => setTimeout(resolve, timeout));
   };
@@ -55,7 +66,9 @@ function Menu(props) {
                 flexDirection: "row",
               }}
             >
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => addToOrder(dish)}
+              >
                 <Image style={styles.dishBoxIcons} source={icons.plus} />
               </TouchableOpacity>
             </View>
@@ -139,8 +152,8 @@ export default function RestaurantInfo({ route, navigation }) {
 
       restaurantDishes.forEach(async (dish) => {
         dishList.push(dish.data());
+        console.log(dish)
       });
-
       setDishes(dishList);
     }
 

@@ -30,7 +30,7 @@ export default function AddDish({ navigation }) {
 
     const res = await restaurantRef
       .collection("Dishes")
-      .add({ name: dishName, price: dishPrice })
+      .add({ name: dishName, price: dishPrice, restaurantId : uid})
       .then(() => {
         navigation.navigate("HomeRestaurantView");
       });
