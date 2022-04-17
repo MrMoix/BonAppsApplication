@@ -46,7 +46,7 @@ export default function Cart({ route, navigation }) {
     navigation.navigate("TableTimeReservation", {
       dishList: cartItem,
       uid: "2sH1gPONg3MvwYMDn4LU3aGRZAN2",
-      restaurantid: cartItem.restaurantId,
+      restaurantid: cartItem[0].restaurantId,
     })
   };
   const wait = (timeout) => {
@@ -98,10 +98,10 @@ export default function Cart({ route, navigation }) {
             </View>
           </View>
         ))}
-        <TouchableOpacity style={styles.button} onPress={() => confirmOrder()}>
+      </KeyboardAwareScrollView>
+      <TouchableOpacity style={styles.button} onPress={() => confirmOrder()}>
           <Text style={styles.buttonTitle}> Confirm Order </Text>
         </TouchableOpacity>
-      </KeyboardAwareScrollView>
     </View>
   );
 }
