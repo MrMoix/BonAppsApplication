@@ -32,6 +32,7 @@ export default function RegistrationScreen({ navigation }) {
           id: uid,
           email,
           fullName,
+          currentCartItem: [],
         };
         const usersRef = firebase.firestore().collection("Clients");
         usersRef
