@@ -41,12 +41,16 @@ export default function TableTimeReservation({ route, navigation }) {
   };
 
   const reserveTable = () => {
-    const order = {dishList: params.dishList, uid: params.uid, restaurantid: params.restaurantid, seatAmount, orderTime: new Date(), date, orderStatus: "Ordered", totalPrice: params.dishList.reduce((a, c) => { return a + c.price}, 0)};
+    const order = { dishList: params.dishList, uid: params.uid, restaurantid: params.restaurantid, seatAmount, orderTime: new Date(), date, orderStatus: "Ordered", totalPrice: params.dishList.reduce((a, c) => { return parseFloat(a) + parseFloat(c.price) }, 0) };
     firebase.firestore()
       .collection("Orders")
       .add(order)
       .then(() => {
         navigation.navigate("ReservationSuccess");
+        const uid = firebase.auth().currentUser.uid;
+
+        const userCart = firebase.firestore().collection('Clients').doc(uid);
+        userCart.update({ currentCartItem: [] })
       })
       .catch((error) => {
         alert(error);
@@ -121,7 +125,7 @@ export default function TableTimeReservation({ route, navigation }) {
             />
           )}
           <TouchableOpacity style={styles.button} onPress={() => reserveTable()}>
-              <Text style={styles.buttonTitle}>Reserve a table</Text>
+            <Text style={styles.buttonTitle}>Reserve a table</Text>
           </TouchableOpacity>
         </View>
       </KeyboardAwareScrollView>

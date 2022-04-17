@@ -15,7 +15,6 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 
 export default function Cart({ route, navigation }) {
   const [cartItem, setCartItem] = useState([]);
-
   useEffect(() => {
     async function fetchCart() {
 
@@ -99,6 +98,9 @@ export default function Cart({ route, navigation }) {
           </View>
         ))}
       </KeyboardAwareScrollView>
+      <Text style={styles.restaurantText}>
+              Total Price : {cartItem.reduce((solde, {price}) => parseFloat(solde) + parseFloat(price), 0)}
+            </Text>
       <TouchableOpacity style={styles.button} onPress={() => confirmOrder()}>
           <Text style={styles.buttonTitle}> Confirm Order </Text>
         </TouchableOpacity>
