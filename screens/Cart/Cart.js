@@ -99,7 +99,7 @@ export default function Cart({ route, navigation }) {
         ))}
       </KeyboardAwareScrollView>
       <Text style={styles.restaurantText}>
-              Total Price : {cartItem.reduce((solde, {price}) => parseFloat(solde) + parseFloat(price), 0)}
+              Total Price : {cartItem.reduce((solde, {price}) => parseFloat(solde) + parseFloat(price), 0).toFixed(2)}
             </Text>
       <TouchableOpacity style={styles.button} onPress={() => confirmOrder()}>
           <Text style={styles.buttonTitle}> Confirm Order </Text>
