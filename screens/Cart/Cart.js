@@ -8,8 +8,6 @@ import {
   RefreshControl,
 } from "react-native";
 import styles from "./styles";
-import { NavigationContainer } from "@react-navigation/native";
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import icons from "../../constants/icons";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
@@ -24,27 +22,28 @@ export default function Cart({ route, navigation }) {
       const items = currentUserCart.data().currentCartItem;
       let dishList = [];
 
-      items.forEach(element =>  { 
+      items.forEach(element => {
         dishList.push(element);
       });
       setCartItem(dishList);
     }
 
     fetchCart();
-  },);
+  });
   const deleteToCart = (dish) => {
 
     const uid = firebase.auth().currentUser.uid;
 
     const userCart = firebase.firestore().collection('Clients').doc(uid);
-    userCart.update({currentCartItem: firebase.firestore.FieldValue.arrayRemove(dish)})
+    userCart.update({ currentCartItem: firebase.firestore.FieldValue.arrayRemove(dish) })
 
     alert("Item deleted to cart !");
   }
   const confirmOrder = () => {
+    const uid = firebase.auth().currentUser.uid;
     navigation.navigate("TableTimeReservation", {
       dishList: cartItem,
-      uid: "2sH1gPONg3MvwYMDn4LU3aGRZAN2",
+      uid: uid,
       restaurantid: cartItem[0].restaurantId,
     })
   };
@@ -89,7 +88,7 @@ export default function Cart({ route, navigation }) {
                 flexDirection: "row",
               }}
             >
-               <TouchableOpacity
+              <TouchableOpacity
                 onPress={() => deleteToCart(dish)}
               >
                 <Image style={styles.dishBoxIcons} source={icons.delete_icon} />
@@ -99,11 +98,11 @@ export default function Cart({ route, navigation }) {
         ))}
       </KeyboardAwareScrollView>
       <Text style={styles.restaurantText}>
-              Total Price : {cartItem.reduce((solde, {price}) => parseFloat(solde) + parseFloat(price), 0).toFixed(2)}
-            </Text>
+        Total Price : {cartItem.reduce((solde, { price }) => parseFloat(solde) + parseFloat(price), 0).toFixed(2)}
+      </Text>
       <TouchableOpacity style={styles.button} onPress={() => confirmOrder()}>
-          <Text style={styles.buttonTitle}> Confirm Order </Text>
-        </TouchableOpacity>
+        <Text style={styles.buttonTitle}> Confirm Order </Text>
+      </TouchableOpacity>
     </View>
   );
 }
