@@ -40,8 +40,16 @@ export default function TableTimeReservation({ route, navigation }) {
     showMode("time");
   };
 
-  const reserveTable = () => {
-    const order = { dishList: params.dishList, uid: params.uid, restaurantid: params.restaurantid, seatAmount, orderTime: new Date(), date, orderStatus: "Ordered", totalPrice: params.dishList.reduce((a, c) => { return parseFloat(a) + parseFloat(c.price) }, 0).toFixed(2) };
+  const reserveTable = async() => {
+    const restaurantRef = firebase
+        .firestore()
+        .collection("Restaurant")
+        .doc(params.restaurantid);
+      const restaurantDoc = await restaurantRef.get();
+    console.log("max sseats " + restaurantDoc.numberPlace);
+
+    if(restaurantDoc.numberPlace >= seatAmount){
+      const order = { dishList: params.dishList, uid: params.uid, restaurantid: params.restaurantid, seatAmount, orderTime: new Date(), date, orderStatus: "Ordered", totalPrice: params.dishList.reduce((a, c) => { return parseFloat(a) + parseFloat(c.price) }, 0).toFixed(2) };
     firebase.firestore()
       .collection("Orders")
       .add(order)
@@ -55,6 +63,7 @@ export default function TableTimeReservation({ route, navigation }) {
       .catch((error) => {
         alert(error);
       });
+    }
   }
 
   return (
