@@ -23,7 +23,6 @@ export default function LoginScreen({ navigation }) {
   // const [auth, setAuth] = useState('')
   // const [credential, setCredential] = useState('')
 
-
   const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
     clientId:
       "198916352344-ffq544auov9b332ivn18u85vm0jd8jpa.apps.googleusercontent.com",
@@ -119,7 +118,6 @@ export default function LoginScreen({ navigation }) {
       .catch((error) => {
         alert(error);
       });
-
   };
 
   const onLoginPress = () => {
@@ -139,12 +137,12 @@ export default function LoginScreen({ navigation }) {
             }
             const user = firestoreDocument.data();
             navigation.navigate("Home");
-            Alert.alert("Check your email", "Your registration succeeded!", [
-              {
-                text: "Continue",
-                onPress: () => console.log("Continue pressed"),
-              },
-            ]);
+            // Alert.alert("Check your email", "Your registration succeeded!", [
+            //   {
+            //     text: "Continue",
+            //     onPress: () => console.log("Continue pressed"),
+            //   },
+            // ]);
           })
           .catch((error) => {
             alert(error);
@@ -160,8 +158,6 @@ export default function LoginScreen({ navigation }) {
   const onGoogleLoginPress = () => {
     promptAsync();
   };
-
-
 
   return (
     <View style={styles.container}>

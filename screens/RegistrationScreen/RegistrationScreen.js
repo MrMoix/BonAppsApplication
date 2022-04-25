@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 import { firebase } from "../../firebase/config";
-import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
+import {
+  Image,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  Alert,
+} from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import styles from "./styles";
 
@@ -40,6 +47,12 @@ export default function RegistrationScreen({ navigation }) {
           .set(data)
           .then(() => {
             navigation.navigate("Home");
+            Alert.alert("Check your email", "Your registration succeeded!", [
+              {
+                text: "Continue",
+                onPress: () => console.log("Continue pressed"),
+              },
+            ]);
           })
           .catch((error) => {
             alert(error);

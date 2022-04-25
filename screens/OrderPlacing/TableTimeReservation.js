@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   View,
   Button,
+  Alert,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import styles from "./styles";
@@ -19,6 +20,7 @@ export default function TableTimeReservation({ route, navigation }) {
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
   const [seatAmount, setSeatAmount] = useState("");
+  const [restaurantData, setRestaurantData] = useState("");
   const params = route.params;
 
   const onChange = (event, selectedDate) => {
@@ -40,22 +42,57 @@ export default function TableTimeReservation({ route, navigation }) {
     showMode("time");
   };
 
-  const reserveTable = () => {
-    const order = { dishList: params.dishList, uid: params.uid, restaurantid: params.restaurantid, seatAmount, orderTime: new Date(), date, orderStatus: "Ordered", totalPrice: params.dishList.reduce((a, c) => { return parseFloat(a) + parseFloat(c.price) }, 0).toFixed(2) };
-    firebase.firestore()
-      .collection("Orders")
-      .add(order)
-      .then(() => {
-        navigation.navigate("ReservationSuccess");
-        const uid = firebase.auth().currentUser.uid;
+  const reserveTable = async () => {
+    let restaurantid = params.restaurantid;
 
-        const userCart = firebase.firestore().collection('Clients').doc(uid);
-        userCart.update({ currentCartItem: [] })
-      })
-      .catch((error) => {
-        alert(error);
-      });
-  }
+    const restaurantRef = firebase
+      .firestore()
+      .collection("Restaurant")
+      .doc(restaurantid);
+    const restaurantDoc = await restaurantRef.get();
+    setRestaurantData(restaurantDoc.data());
+
+    console.log("max sseats " + restaurantData.numberPlace);
+
+    if (restaurantData.numberPlace >= seatAmount) {
+      const order = {
+        dishList: params.dishList,
+        uid: params.uid,
+        restaurantid: params.restaurantid,
+        seatAmount,
+        orderTime: new Date(),
+        date,
+        orderStatus: "Ordered",
+        totalPrice: params.dishList
+          .reduce((a, c) => {
+            return parseFloat(a) + parseFloat(c.price);
+          }, 0)
+          .toFixed(2),
+      };
+      firebase
+        .firestore()
+        .collection("Orders")
+        .add(order)
+        .then(() => {
+          navigation.navigate("ReservationSuccess");
+          const uid = firebase.auth().currentUser.uid;
+
+          const userCart = firebase.firestore().collection("Clients").doc(uid);
+          userCart.update({ currentCartItem: [] });
+        })
+        .catch((error) => {
+          alert(error);
+        });
+    } else {
+      Alert.alert("Alert ", "Not enough seats available in this restaurant.", [
+        {
+          text: "OK",
+          onPress: () => console.log("OK Pressed"),
+          style: "cancel",
+        },
+      ]);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -124,7 +161,10 @@ export default function TableTimeReservation({ route, navigation }) {
               onChange={onChange}
             />
           )}
-          <TouchableOpacity style={styles.button} onPress={() => reserveTable()}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => reserveTable()}
+          >
             <Text style={styles.buttonTitle}>Reserve a table</Text>
           </TouchableOpacity>
         </View>

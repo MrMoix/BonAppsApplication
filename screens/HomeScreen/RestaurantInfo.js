@@ -17,15 +17,19 @@ import { setStatusBarBackgroundColor } from "expo-status-bar";
 
 function Menu(props) {
   const addToOrder = (dish) => {
-
     const currentUid = firebase.auth().currentUser.uid;
 
-    const currentUserCart = firebase.firestore().collection('Clients').doc(currentUid);
+    const currentUserCart = firebase
+      .firestore()
+      .collection("Clients")
+      .doc(currentUid);
 
-    currentUserCart.update({currentCartItem: firebase.firestore.FieldValue.arrayUnion(dish)})
+    currentUserCart.update({
+      currentCartItem: firebase.firestore.FieldValue.arrayUnion(dish),
+    });
 
     alert("Item added to cart !");
-  }
+  };
   const wait = (timeout) => {
     return new Promise((resolve) => setTimeout(resolve, timeout));
   };
@@ -66,9 +70,7 @@ function Menu(props) {
                 flexDirection: "row",
               }}
             >
-              <TouchableOpacity
-                onPress={() => addToOrder(dish)}
-              >
+              <TouchableOpacity onPress={() => addToOrder(dish)}>
                 <Image style={styles.dishBoxIcons} source={icons.plus} />
               </TouchableOpacity>
             </View>
@@ -152,7 +154,7 @@ export default function RestaurantInfo({ route, navigation }) {
 
       restaurantDishes.forEach(async (dish) => {
         dishList.push(dish.data());
-        console.log(dish)
+        console.log(dish);
       });
       setDishes(dishList);
     }
