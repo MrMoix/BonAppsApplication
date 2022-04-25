@@ -3,7 +3,12 @@ import React, { useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import { LoginScreen, HomeScreen, RegistrationScreen, OrderPlacing } from "./screens";
+import {
+  LoginScreen,
+  HomeScreen,
+  RegistrationScreen,
+  OrderPlacing,
+} from "./screens";
 import RestaurantSignup from "./screens/RegistrationScreen/RestaurantSignup";
 import RestaurantInfo from "./screens/HomeScreen/RestaurantInfo";
 import HomeRestaurantView from "./screens/HomeScreen/HomeRestaurantView";
@@ -14,8 +19,7 @@ import AddDish from "./screens/HomeScreen/AddDish";
 import TableTimeReservation from "./screens/OrderPlacing/TableTimeReservation";
 import CartScreen from "./screens/Cart/Cart";
 import ReservationSuccess from "./screens/OrderPlacing/ReservationSuccess";
-import { color } from "react-native/Libraries/Components/View/ReactNativeStyleAttributes";
-
+import Logout from "./screens/LoginScreen/Logout";
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
@@ -87,6 +91,11 @@ function AuthStack({ navigation }) {
       <Stack.Screen
         name="Registration"
         component={RegistrationScreen}
+        options={{ title: "", headerTransparent: true }}
+      />
+      <Stack.Screen
+        name="Logout"
+        component={Logout}
         options={{ title: "", headerTransparent: true }}
       />
     </Stack.Navigator>
@@ -193,15 +202,25 @@ export default function App() {
           }}
         />
         <Drawer.Screen
-        name="Cart"
-        component={CartStack}
-        options={{
-          headerStyle: {
-            backgroundColor: "#4BBE77",
-          },
-          headerTintColor: "#fff",
-        }}
-      />
+          name="Cart"
+          component={CartStack}
+          options={{
+            headerStyle: {
+              backgroundColor: "#4BBE77",
+            },
+            headerTintColor: "#fff",
+          }}
+        />
+        <Drawer.Screen
+          name="Logout"
+          component={Logout}
+          options={{
+            headerStyle: {
+              backgroundColor: "#4BBE77",
+            },
+            headerTintColor: "#fff",
+          }}
+        />
       </Drawer.Navigator>
     </NavigationContainer>
   );
